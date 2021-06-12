@@ -1,7 +1,7 @@
 {
   "name": "head-style-boss",
-  "version": "1.0.0",
-  "description": "Control your head style elements. Offer Dark Mode and multiple additional style sheet choices. Provides transitions flash prevention for all choices.",
+  "version": "1.0.1",
+  "description": "Control your head style elements. A Gatsby local plugin. Offer Dark Mode and multiple additional style sheet choices. Provides transitions flash prevention for all choices.",
   "main": "index.js",
   "scripts": {
     "test": "test"

@@ -1,16 +1,11 @@
-<div style="display: flex; width: 100%;">
-  <div>
   <img src="./icons/headstyleboss.jpg" alt="Head Style Boss Logo" title="Gary Larsons Farside Boss Lady" style="width: 100px; height: auto; padding: 0px 20px;" >
-  </div>
-  <div style="height: 150px;">
-    <h1> Head <i>Style</i> Boss (HSB) </h1>
-    <i>Boss The Styles in Your Head Element</i>
-    <li>A Gatsby **local plugin**</li>
-    <li>Dark Mode with no loading flash</li>
-    <li>Supports Multiple User Selected Styles</li>
-    <li>Use CSS style sheets in your head, use <i>whatever</i> in your components. I use emotion and css modules in my site.</li>
-  </div>
-</div>
+ 
+# Head __Style__ Boss (HSB) 
+- Boss The Styles in Your Head Element
+- A Gatsby **local plugin**
+- Dark Mode with no loading flash
+- Supports Multiple User Selected Styles
+- Use CSS style sheets in your `<head>`, use __whatever__ in your components. I use emotion and css modules in my site.
 
 ## Feature Details
 
