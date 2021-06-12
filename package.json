@@ -1,6 +1,6 @@
 {
-  "name": "head-style-boss",
-  "version": "1.0.1",
+  "name": "gatsby-head-style-boss",
+  "version": "1.0.2",
   "description": "Control your head style elements. A Gatsby local plugin. Offer Dark Mode and multiple additional style sheet choices. Provides transitions flash prevention for all choices.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EdPike365/HeadStyleBoss.git"
+    "url": "git+https://github.com/EdPike365/GatsbyHeadStyleBoss.git"
   },
   "keywords": [
     "gatsby",
@@ -21,7 +21,7 @@
   "author": "EdPike365",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/EdPike365/HeadStyleBoss/issues"
+    "url": "https://github.com/EdPike365/GatsbyHeadStyleBoss/issues"
   },
-  "homepage": "https://github.com/EdPike365/HeadStyleBoss#readme"
+  "homepage": "https://github.com/EdPike365/GatsbyHeadStyleBoss#readme"
 }
