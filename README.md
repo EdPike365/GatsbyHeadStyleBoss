@@ -1,8 +1,8 @@
   <img src="./icons/headstyleboss.jpg" alt="Head Style Boss Logo" title="Gary Larsons Farside Boss Lady" style="width: 100px; height: auto; padding: 0px 20px;" >
  
 # Head __Style__ Boss (HSB) 
-- Boss The Styles in Your Head Element
-- A Gatsby **local plugin**
+- Be the Boss of the Styles in Your Head Element
+- A Gatsby plugin
 - Dark Mode with no loading flash
 - Supports Multiple User Selected Styles
 - Use CSS style sheets in your `<head>`, use __whatever__ in your components. I use emotion and css modules in my site.
@@ -22,34 +22,38 @@
   - Style Selector: List all of your style options based on HSB_Config.
   - Style State Display: Real time feedback on the status of all managed styles.
   - Show user's live "prefers dark mode" setting.
-- No external dependencies. Default styles use css vars. Define the vars in **your** :root or edit the plugins `SHB.module.css` file.
-- __Caveat__: If you change values on the HSB managed style sheets, you must bounce Gatsby. This works fine for me because I mostly only use :root variables (ex: "--media-width-xs: 320px;") on the style sheets and style my components independently.
+- No external dependencies. Default styles use css vars. Define the vars in **your** style's :root or edit the node module's `components/SHB.module.css` file.
+- __Caveats__:
+  - This has been migrated from a folder in Gatsby src to a local gatsby plugin to a full Gatsby plugin in about 1 day. Plz be patient. 
+  - If you change values on the HSB managed style sheets, you must bounce Gatsby. This works fine for me because I mostly only use :root variables (ex: "--media-width-xs: 320px;") on the style sheets and style my components independently.
+  - HSB does not currently minify anything.
+  - Gatsby plugin config does not take or use a "your style folder" arg, coming soon.
+  - There is no automated testing Typescript.
 
 ## Installation
 
-- NOTE: this has been migrated from a folder in Gatsby src to a "local plugin" in the "plugins" folder. I will be trying to turn it into a full blown node install ASAP. Config will move from the current HSB_Config.json file to `gatsby-config`. Also, it does not currently minify anything.
-- For now, node install it somewhere outside your project.
-- Copy and paste the `head-style-boss` folder into the `plugins` folder at the top of your Gatsby project, parallel with your `src` folder.
-- Modify `head-style-boss/gatsby/HSB_Config.json`:
-  - change "stylesFolder"
+- `npm i gatsby-head-style-boss`
+- Add `gatsby-head-style-boss` to your `gatsby-config.js` file.
+- Modify `node_modules/gatsby-head-style-boss/gatsby/HSB_Config.json`:
+  - change "stylesFolder" path
   - modify the list of css files to match yours.
-- In your components and pages, you will need to remove anywhere you were importing those css files or you will get a double copy.
+  - This is a temporary pain. I should have config customization done tomorrow.
+- In **your** React components and pages, you will need to remove anywhere you were importing those css files or you will get a double copy.
 - Importing components: (The import paths should shorten once this is an actual node module.)
+
 ```js
 import {
   DarkModeToggle,
   StyleSelector,
   StylesSummary,
   PrefersDarkMode,
-} from "../../plugins/head-style-boss/components/HSB_Components"
+} from "gatsby-head-style-boss/components/HSB_Components"
 ```
 
 ## How Does it Work?
 
-- Edit the HSB_Config.json configuration file:
-  - Configured style attributes become "data" attributes written into the `<style>` elements during SSR.
-  - `HSB_Browser.js` is injected just below the `<body>` tag. It reads the configured styles into a `HSBModel` object at runtime.
-  - Style state (`enabled`) is then managed via HSBModel.
+- Edit the `hsb-config.json` configuration file:
+  - Configured style attributes become "data" attributes written into the `<style>` elements during SSR. The fields are written into the element; you can see them in the page source code.
   - Each CSS file is configured for 1 or more _uses_ (via `data-use` attribute):
     - "always" enabled styles
     - Optionally Enabled Styles
@@ -57,8 +61,11 @@ import {
       - "dark" styles
       - generic "alternative" styles
   - Styles are injected in the order listed.
-  - Setting styles by `use` will `enable` the last style with that `use`, and disable all other _optional_ styles.
+- `hsb-browser.js` is injected just below the `<body>` tag. The hsb_browser code reads the configured styles into a `HSBModel` object at runtime.
+  - Each style's `enabled` state is then managed via HSBModel.
   - You can always manually set `enable` state via SHBModel method calls.
+  - Setting styles by `use` will `enable` the last style with that `use`, and disable all other _optional_ styles.
+- `HSB_Context` wraps the `<root>` element using the `wrapRootElement` hook in the modules `gatsby-ssr.js` and `gatsby-browser.js`.
 
 > **WARNING: Title Attr and "Alternate" Style Sheets**  
 > There is an ancient tech called "Alternate Style Sheets". If you use the `title` attr on more than 1 style, the browser will only enable the first one it finds. It will disable any named sheets or styles past that one. Its a bit like radio buttons for styles.
@@ -67,12 +74,8 @@ import {
 
 ### Components:
 
-- The on page style mgt code is in `HSB_Browser.js`. It is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE). It is mandartory for everything else to work. It must appear just below the `<body>` element. Import the mandatory `onPreRenderHTML` function into `gatsby-ssr.js` and to inject the CSS
-- Get the required javascript function on Gatsby's html.js template.
-  - Option 1: Import the onPreBody function to `gatsby-ssr.js` which injects the code.
-  - Option 2: Not recommended. Copy the Gatsby `html.js` page to your local project root and paste the code in. Do this if you already have a custom `html.js`.
-
-
+- The on page style mgt code is in `hsb-browser.js`. It is an [IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE). It is mandartory for everything else to work. It must appear just below the `<body>` element. Import the mandatory `onPreRenderHTML` function into `gatsby-ssr.js` and to inject the CSS
+- The HSB components interact with HSBModel to control and view state. (MVC pattern)
 
 ## Typical minimal setup:
 
@@ -82,9 +85,8 @@ import {
   - normalize.css, use "always"
   - yourtheme.css, use "always"
   - yourdarkmode.css, use "dark"
-- Add HSB_Context.
 - Add HSB_Components DarkModeToggle to a page.
-- When dark mode is activated, the dark css cascades over the core. The JS code on the html page handles everything.
+- When dark mode is activated, the dark CSS **cascades** over the core like it was meant to in the days of yore. The JS code on the html page handles everything.
 - You can optionally add React components like the ToggleDarkMode component. If you use your own toggler, it has to work with `HSB_Context`.
 
 ## Notes For Hackers
