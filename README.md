@@ -1,37 +1,55 @@
 <div style="display: flex; width: 100%;">
   <div>
-  <img src="headstyleboss.jpg" alt="Head Style Boss Logo" title="Gary Larsons Farside Boss Lady" style="width: 100px; height: auto; padding: 0px 20px;" >
+  <img src="./icons/headstyleboss.jpg" alt="Head Style Boss Logo" title="Gary Larsons Farside Boss Lady" style="width: 100px; height: auto; padding: 0px 20px;" >
   </div>
   <div style="height: 150px;">
     <h1> Head <i>Style</i> Boss (HSB) </h1>
     <i>Boss The Styles in Your Head Element</i>
-    <li>JS and ReactJS, Supports GatsbyJS SSR</li>
+    <li>A Gatsby **local plugin**</li>
     <li>Dark Mode with no loading flash</li>
     <li>Supports Multiple User Selected Styles</li>
-    <li>Use CSS style sheets in your head, use <i>whatever</i> in your components.</li>
+    <li>Use CSS style sheets in your head, use <i>whatever</i> in your components. I use emotion and css modules in my site.</li>
   </div>
 </div>
 
-## Features
+## Feature Details
 
 - Offer Dark Mode _with no flash on initial load_.
 - Support multiple legacy CSS style sheets and the order that they appear in `<Head>`.
-- Offer the user multiple style options, not just Dark Mode.
+- Optionally offer the user multiple style options, not just Dark Mode.
   - Avoid having Gatsby combine your style sheets randomly in a common css file.
   - Each style sheet can be in its own CSS file.
   - Each CSS file is _inlined_ into its own seperate head style element **_on the server_**.
-- Manage style options with a JSON Config File
-  - Use JSON config file to annotate the `<style>` elements to make them manageable at runtime.
+- Manage style options with a JSON Config File (`gatsby-config` coming soon)
+  - Annotate the `<style>` elements to make them manageable at runtime.
 - Contains optional React components:
-  - HSB Context object, ready for use with Gatsby SSR.
   - Dark Mode Toggle
   - Style Selector: List all of your style options based on HSB_Config.
   - Style State Display: Real time feedback on the status of all managed styles.
   - Show user's live "prefers dark mode" setting.
-- No external dependencies. Default styles use css vars. Define the vars in your :root or edit the module.css file.
-- Caveat: If you change values on the HSB managed style sheets, you must bounce Gatsby. This works fine for me because I mostly only use :root variables (ex: "--media-width-xs: 320px;") on the style sheets and style my components independently.
+- No external dependencies. Default styles use css vars. Define the vars in **your** :root or edit the plugins `SHB.module.css` file.
+- __Caveat__: If you change values on the HSB managed style sheets, you must bounce Gatsby. This works fine for me because I mostly only use :root variables (ex: "--media-width-xs: 320px;") on the style sheets and style my components independently.
 
-## How?
+## Installation
+
+- NOTE: this has been migrated from a folder in Gatsby src to a "local plugin" in the "plugins" folder. I will be trying to turn it into a full blown node install ASAP. Config will move from the current HSB_Config.json file to `gatsby-config`. Also, it does not currently minify anything.
+- For now, node install it somewhere outside your project.
+- Copy and paste the `head-style-boss` folder into the `plugins` folder at the top of your Gatsby project, parallel with your `src` folder.
+- Modify `head-style-boss/gatsby/HSB_Config.json`:
+  - change "stylesFolder"
+  - modify the list of css files to match yours.
+- In your components and pages, you will need to remove anywhere you were importing those css files or you will get a double copy.
+- Importing components: (The import paths should shorten once this is an actual node module.)
+```js
+import {
+  DarkModeToggle,
+  StyleSelector,
+  StylesSummary,
+  PrefersDarkMode,
+} from "../../plugins/head-style-boss/components/HSB_Components"
+```
+
+## How Does it Work?
 
 - Edit the HSB_Config.json configuration file:
   - Configured style attributes become "data" attributes written into the `<style>` elements during SSR.
@@ -59,21 +77,20 @@
   - Option 1: Import the onPreBody function to `gatsby-ssr.js` which injects the code.
   - Option 2: Not recommended. Copy the Gatsby `html.js` page to your local project root and paste the code in. Do this if you already have a custom `html.js`.
 
-### Installation
 
-- Copy and paste the `headstyleboss` folder into:
-  - Gatsby: `src` folder.
-- Modify `HSB_Config`. If your css file is already minified, leave `minifyCSS` setting as false.
-- Use `HSB_Context` (or `HSBStyleContextProvider` if you have mulitple contexts) in `gatsby-browser.js` and `gatsby-server.js`. See examples.
-- Use `HSB_Utils` in `gatsby-ssr.js` to do file injections. You will also need a ref to `fs` filesystem. See examples.
 
-> Typical minimal setup:
->
-> - You have a legacy/core CSS file that always needs to be enabled.
-> - You have a _modifying_ CSS file for dark mode.
-> - In the HSB config file, list the core file first, configure it with use="default always".
-> - List the "dark" file second, configure it with use="dark". When dark mode is activated, the dark css cascades over the core. The JS code on the html page handles everything.
-> - You can optionally add React components like the ToggleDarkMode component. If you use your own toggler, it has to work with `HSB_Context`.
+## Typical minimal setup:
+
+- You have a normalize CSS file and a legacy core CSS file. They must always be enabled and come in the same order. 
+- You have a _modifying_ CSS file for dark mode (and maybe more options). It is meant to overwrite some previous values. It can be enabled or disabled.
+- In the HSB config file, list the files in order of how they should cascade: 
+  - normalize.css, use "always"
+  - yourtheme.css, use "always"
+  - yourdarkmode.css, use "dark"
+- Add HSB_Context.
+- Add HSB_Components DarkModeToggle to a page.
+- When dark mode is activated, the dark css cascades over the core. The JS code on the html page handles everything.
+- You can optionally add React components like the ToggleDarkMode component. If you use your own toggler, it has to work with `HSB_Context`.
 
 ## Notes For Hackers
 

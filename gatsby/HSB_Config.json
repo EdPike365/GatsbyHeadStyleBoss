@@ -1,7 +1,7 @@
 {
   "WARNING": "You should not use Title attribute. Read README for why.",
   "stylesFolder": "./src/styles/",
-  "clientJSFilePath": "./src/headstyleboss/HSB_Browser.js",
+  "customJSFilePath": "",
   "clientComponentFolder": "./src/styles/",
   "idPrefix": "HeadStyleBossID_",
   "minifyCSS": false,

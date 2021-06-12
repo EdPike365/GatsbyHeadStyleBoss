@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import * as styles from "./HSB.module.css"
-import { HSBStyleContext } from "./HSB_Context"
-import { isSSR } from "./HSB_Helpers"
+import { HSBStyleContext } from "../contexts/HSB_Context"
+import { isSSR } from "../utils/HSB_Helpers"
 import MoonIconSolid from "./MoonIconSolid"
 import SunIconSolid from "./SunIconSolid"
 

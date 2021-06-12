@@ -1,8 +1,8 @@
 {
   "name": "head-style-boss",
   "version": "1.0.0",
-  "description": "\u0016Control your head style elements, offer multiple themes and dark mode without transition flash.",
-  "main": "HSB_Components.js",
+  "description": "Control your head style elements. Offer Dark Mode and multiple additional style sheet choices. Provides transitions flash prevention for all choices.",
+  "main": "index.js",
   "scripts": {
     "test": "test"
   },
@@ -11,14 +11,15 @@
     "url": "git+https://github.com/EdPike365/HeadStyleBoss.git"
   },
   "keywords": [
-    "darkmode",
     "gatsby",
+    "gatsby-plugin",
+    "darkmode",
+    "stylesheet",
     "css",
-    "\"flash",
-    "prevention\""
+    "\" flash prevention\""
   ],
-  "author": "Ed Pike",
-  "license": "ISC",
+  "author": "EdPike365",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/EdPike365/HeadStyleBoss/issues"
   },

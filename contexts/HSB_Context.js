@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from "react"
 // The HSBModel may not be available at this point, or might not be populated yet, so empty object
 export const HSBStyleContext = createContext({})
 
-export function HSBStyleContextProvider({ children }) {
+export const HSBStyleContextProvider = (element) => {
   // This gets called when page loads or reloads,
   // or when something changes the model state, which calls updateModel()
   // **IF** in Gatsby production mode, page reload is called.
@@ -31,12 +31,13 @@ export function HSBStyleContextProvider({ children }) {
 
   return (
     <HSBStyleContext.Provider value={{ HSBModel, updateModel }}>
-      {children}
+      {element.children}
     </HSBStyleContext.Provider>
   )
+
 }
 
 /* this is for Gatsby to use to wrap the root element */
-export const HSBStyleContextWrapper = ({ element }) => (
+export const HSBStyleContextElementWrapper = ({ element }) => (
   <HSBStyleContextProvider>{element}</HSBStyleContextProvider>
 )

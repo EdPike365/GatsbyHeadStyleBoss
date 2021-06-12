@@ -1,18 +1,20 @@
 import * as React from "react"
-import { minifyCSSString, minifyJSString, makeRandomNumberKey } from "./HSB_Helpers"
+import path from "path"
+import { minifyCSSString, minifyJSString, makeRandomNumberKey } from "../utils/HSB_Helpers"
 
-const pathToConfig = "./src/head-style-boss/HSB_Config.json"
-
-export const getHSBConfigFromFile = fs => {
+export const getHSBConfigFromFile = (fs, pluginGatsbyFolderPath, configFileName) => {
 
   let rawData = null
   try {
-    rawData = fs.readFileSync(pathToConfig)
+    const filePath = path.join(pluginGatsbyFolderPath, configFileName)
+    console.log("getHSBConfigFromFile() opening file at path " + path.resolve(filePath))
+    rawData = fs.readFileSync(filePath)
     fs.close
   } catch (err) {
     console.error("HSB_Utils getHSBConfigFromFile: " + err)
     fs.close
-    throw (err)
+    console.log("getHSBConfigFromFile() error opening file at path " + path.resolve(filePath))
+    //throw (err)
   }
 
   const HSBConfig = JSON.parse(rawData) //one op per line
@@ -35,7 +37,7 @@ export const getHSBStyleElements = (HSBConfig, fs) => {
 
 const getDefFromConfig = (styleConfig, stylesFolder, fs) => {
 
-  const filePath = stylesFolder + styleConfig["data-filename"]
+  const filePath = path.join(stylesFolder, styleConfig["data-filename"])
   console.log("HSB_Utils.getDefFromConfig(): Loading css file: " + filePath)
 
   let cssString = ""
@@ -84,12 +86,26 @@ const getElementFromDef = (styleDef, minifyCSS) => {
   )
 }
 
-export const getHSBPageFunction = (clientJSFilePath, fs, minifyJS) => {
+export const getHSBPageFunction = (fs, customJSFilePath, pluginGatsbyFolderPath, clientJSFileName, minifyJS) => {
 
   let jsString = null
   try {
-    jsString = fs.readFileSync(clientJSFilePath, "utf-8")
-    fs.close
+    let pathToFile = ""
+    
+    if(customJSFilePath){
+      console.log("getHSBPageFunction() using custom file path: " + customJSFilePath)
+      pathToFile = customJSFilePath
+    }else{
+      pathToFile = path.join(pluginGatsbyFolderPath, clientJSFileName)
+    } 
+
+    if( fs.existsSync(pathToFile) ){
+      jsString = fs.readFileSync(pathToFile, "utf-8")
+      fs.close
+    }else{
+      console.log("getHSBPageFunction() file at path did not exist: " + pathToFile)
+    }
+
   } catch (err) {
     console.error("gatsby-ssr.js getHSBPageFunction(): " + err)
     fs.close
