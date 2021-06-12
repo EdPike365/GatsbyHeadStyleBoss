@@ -1,6 +1,6 @@
 ;(function () {
   // The odd code above is special for an IIFE. Do not modify
-  console.log("Head Style Boss Flash Prevention Code is running in the body.");
+  console.log("Gatsby Head Style Boss: Flash Prevention Code is running.");
   log = null; 
   // HSBModel is an IIFE and runs before the body loads. 
   // So it reflects the style elements that ACTUALLY got inserted on SSR, and their actual state.

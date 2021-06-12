@@ -1,12 +1,8 @@
 import fs from "fs"
 import { HSBStyleContextProvider } from "./contexts/HSB_Context"
-import {
-  getHSBConfigFromFile,
-  getHSBStyleElements,
-  getHSBPageFunction,
-  injectHSBStylesIntoHead,
-  injectHSBClientJSIntoTopOfBody
-} from "./gatsby/HSB_Utils"
+import { getConfig } from "./gatsby/configFactory"
+import { getStyleElements, injectStylesIntoHead } from "./gatsby/styleElementFactory"
+import { getBrowserFunction, injectBrowserFunctionIntoTopOfBody} from "./gatsby/browserFunctionFactory"
 
 export const wrapRootElement = ({ element }) => {
   return (
@@ -16,12 +12,11 @@ export const wrapRootElement = ({ element }) => {
 
 // Pre load all the file system stuff because
 // onPreRenderHTML, etc, runs once per page in prod, so would be big hit
-const pluginGatsbyFolderPath = "plugins/head-style-boss/gatsby"
-const configFileName = "./HSB_Config.json"
-const clientJSFileName = "./HSB_Browser.js"
-const HSBConfig = getHSBConfigFromFile(fs, pluginGatsbyFolderPath, configFileName)
-const HSBStyleElements = getHSBStyleElements(HSBConfig, fs)
-const HSBPageFunction = getHSBPageFunction( fs, HSBConfig.customJSFilePath, pluginGatsbyFolderPath, clientJSFileName, HSBConfig.minifyJS )
+const moduleGatsbyFolderPath = "node_modules/gatsby-head-style-boss/gatsby"
+
+const config = getConfig(fs, "", "./hsb-config.json")
+const styleElements = getStyleElements(config, fs)
+const browserFunction = getBrowserFunction( fs, moduleGatsbyFolderPath, "./hsb-browser.js", config.minifyJS )
 
 // you can only export this hook once
 // in dev it only runs once. in prod, it runs once per page.
@@ -31,7 +26,7 @@ export const onPreRenderHTML = ({
   getPreBodyComponents,
   replacePreBodyComponents,
 }) => {
-  injectHSBStylesIntoHead(HSBStyleElements, getHeadComponents, replaceHeadComponents)
-  injectHSBClientJSIntoTopOfBody( HSBPageFunction, getPreBodyComponents, replacePreBodyComponents )  
+  injectStylesIntoHead(styleElements, getHeadComponents, replaceHeadComponents)
+  injectBrowserFunctionIntoTopOfBody( browserFunction, getPreBodyComponents, replacePreBodyComponents )  
 }
 

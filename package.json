@@ -1,15 +1,38 @@
 {
-  "name": "gatsby-head-style-boss",
-  "version": "1.0.2",
+  "_from": "gatsby-head-style-boss",
+  "_id": "gatsby-head-style-boss@1.0.2",
+  "_inBundle": false,
+  "_integrity": "sha512-L33eFahsv00om3aWka0IMZ0zQsTmAAEnMvksRy56dDM8aaWHWD7VZF3HLoF3WtHryWzmJfv8nLQWjSE4lGCdwQ==",
+  "_location": "/gatsby-head-style-boss",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "gatsby-head-style-boss",
+    "name": "gatsby-head-style-boss",
+    "escapedName": "gatsby-head-style-boss",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/gatsby-head-style-boss/-/gatsby-head-style-boss-1.0.2.tgz",
+  "_shasum": "416dd6448bbd689b01bb1ddf0c551ecb8f71df68",
+  "_spec": "gatsby-head-style-boss",
+  "_where": "C:\\Users\\EdPike365\\code\\edpike365-blog",
+  "author": {
+    "name": "EdPike365"
+  },
+  "bugs": {
+    "url": "https://github.com/EdPike365/GatsbyHeadStyleBoss/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
   "description": "Control your head style elements. A Gatsby local plugin. Offer Dark Mode and multiple additional style sheet choices. Provides transitions flash prevention for all choices.",
-  "main": "index.js",
-  "scripts": {
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/EdPike365/GatsbyHeadStyleBoss.git"
-  },
+  "homepage": "https://github.com/EdPike365/GatsbyHeadStyleBoss#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -18,10 +41,15 @@
     "css",
     "\" flash prevention\""
   ],
-  "author": "EdPike365",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/EdPike365/GatsbyHeadStyleBoss/issues"
+  "main": "index.js",
+  "name": "gatsby-head-style-boss",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdPike365/GatsbyHeadStyleBoss.git"
   },
-  "homepage": "https://github.com/EdPike365/GatsbyHeadStyleBoss#readme"
+  "scripts": {
+    "test": "test"
+  },
+  "version": "1.0.2"
 }
