@@ -9,7 +9,7 @@
     constructor() {
       if(log)console.log("HSBModel constructor() running...");
       // idPrefix doubles as local storage Key
-      // TODO: get idPrefix from config file, probably via a meta tag, allow any REGEX
+      // TODO: get idPrefix from config
       this.idPrefix = "HeadStyleBossID_";
       this.styles = [];
       
@@ -23,7 +23,6 @@
       if(log)console.log("HSBModel constructor() done!");
     }
 
-    //------------------------- Public Facing Methods ----------------
     isUsingADarkStyle(){
       let darkStyles = this.getStylesWithUse("dark");
       darkStyles = darkStyles.filter( style => style.disabled == false );
@@ -88,11 +87,6 @@
         "[id*='" + this.idPrefix + "']"
       )
 
-      if(log)console.log(
-        "populateHSBModelFromPage(): done populating, found " +
-        this.styles.length +
-          " style Elements."
-      )
     }
 
     enableInitialStyle = () => {

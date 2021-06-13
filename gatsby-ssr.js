@@ -1,8 +1,7 @@
 import fs from "fs"
 import { HSBStyleContextProvider } from "./contexts/HSB_Context"
-import { getConfig } from "./gatsby/configFactory"
-import { getStyleElements, injectStylesIntoHead } from "./gatsby/styleElementFactory"
-import { getBrowserFunction, injectBrowserFunctionIntoTopOfBody} from "./gatsby/browserFunctionFactory"
+import { getStyleElements, injectStylesIntoHead } from "gatsby-head-style-boss/ssr/styleElementFactory"
+import { getBrowserFunction, injectBrowserFunctionIntoTopOfBody} from "gatsby-head-style-boss/ssr/browserFunctionFactory"
 
 export const wrapRootElement = ({ element }) => {
   return (
@@ -10,22 +9,30 @@ export const wrapRootElement = ({ element }) => {
   )
 }
 
-// Pre load all the file system stuff because
-// onPreRenderHTML, etc, runs once per page in prod, so would be big hit
-const moduleGatsbyFolderPath = "node_modules/gatsby-head-style-boss/gatsby"
+const moduleSSRFolderPath = "node_modules/gatsby-head-style-boss/ssr"
 
-const config = getConfig(fs, "", "./hsb-config.json")
-const styleElements = getStyleElements(config, fs)
-const browserFunction = getBrowserFunction( fs, moduleGatsbyFolderPath, "./hsb-browser.js", config.minifyJS )
+let config = null;
+let styleElements = null;
+let browserFunction = null;
 
-// you can only export this hook once
-// in dev it only runs once. in prod, it runs once per page.
+// You can only export this hook once per instance of gatsby-ssr.js.
+// onPreRenderHTML(): In dev build it only runs once. In prod build, it runs once per page.
+// So we only want to load our file reads once. Loading is expensive.
 export const onPreRenderHTML = ({
   getHeadComponents,
   replaceHeadComponents,
   getPreBodyComponents,
-  replacePreBodyComponents,
-}) => {
+  replacePreBodyComponents
+  
+}, pluginOptions) => {
+  
+  if(!config){
+    console.log("HSB: gatsby-ssr: config was null, loading resources...")
+    config = pluginOptions.config
+    styleElements = getStyleElements(config, fs)
+    browserFunction = getBrowserFunction( fs, moduleSSRFolderPath, "./hsb-browser.js", config.minifyBrowserFunction )
+  }
+
   injectStylesIntoHead(styleElements, getHeadComponents, replaceHeadComponents)
   injectBrowserFunctionIntoTopOfBody( browserFunction, getPreBodyComponents, replacePreBodyComponents )  
 }

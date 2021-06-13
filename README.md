@@ -1,61 +1,125 @@
   <img src="./icons/headstyleboss.jpg" alt="Head Style Boss Logo" title="Gary Larsons Farside Boss Lady" style="width: 100px; height: auto; padding: 0px 20px;" >
  
-# Head __Style__ Boss (HSB) 
+# Gatsby Head __Style__ Boss (HSB) 
 - Be the Boss of the Styles in Your Head Element
-- A Gatsby plugin
-- Dark Mode with no loading flash
-- Supports Multiple User Selected Styles
-- Use CSS style sheets in your `<head>`, use __whatever__ in your components. I use emotion and css modules in my site.
 
-## Feature Details
+## Description
 
-- Offer Dark Mode _with no flash on initial load_.
-- Support multiple legacy CSS style sheets and the order that they appear in `<Head>`.
-- Optionally offer the user multiple style options, not just Dark Mode.
-  - Avoid having Gatsby combine your style sheets randomly in a common css file.
-  - Each style sheet can be in its own CSS file.
-  - Each CSS file is _inlined_ into its own seperate head style element **_on the server_**.
-- Manage style options with a JSON Config File (`gatsby-config` coming soon)
-  - Annotate the `<style>` elements to make them manageable at runtime.
-- Contains optional React components:
-  - Dark Mode Toggle
-  - Style Selector: List all of your style options based on HSB_Config.
-  - Style State Display: Real time feedback on the status of all managed styles.
-  - Show user's live "prefers dark mode" setting.
-- No external dependencies. Default styles use css vars. Define the vars in **your** style's :root or edit the node module's `components/SHB.module.css` file.
-- __Caveats__:
-  - This has been migrated from a folder in Gatsby src to a local gatsby plugin to a full Gatsby plugin in about 1 day. Plz be patient. 
-  - If you change values on the HSB managed style sheets, you must bounce Gatsby. This works fine for me because I mostly only use :root variables (ex: "--media-width-xs: 320px;") on the style sheets and style my components independently.
-  - HSB does not currently minify anything.
-  - Gatsby plugin config does not take or use a "your style folder" arg, coming soon.
-  - There is no automated testing Typescript.
+- Provide dark mode, and multiple other styles options, using CSS style sheets embedded in the `<head>`. Prevent default style flash.
+- Support multiple legacy CSS style sheets in the `<head>` and the order that they appear in.
 
-## Installation
+### Dependencies
+
+None. Developed with Gatsby 3.6.
+
+## How to install
 
 - `npm i gatsby-head-style-boss`
 - Add `gatsby-head-style-boss` to your `gatsby-config.js` file.
-- Modify `node_modules/gatsby-head-style-boss/gatsby/HSB_Config.json`:
+- Edit the the plugin config (see examples below):
   - change "stylesFolder" path
-  - modify the list of css files to match yours.
-  - This is a temporary pain. I should have config customization done tomorrow.
-- In **your** React components and pages, you will need to remove anywhere you were importing those css files or you will get a double copy.
-- Importing components: (The import paths should shorten once this is an actual node module.)
+  - modify the list of css files to match yours.  
+- In **your** React components and pages, you will need to remove anywhere you were importing those css files or you will get a double copy in the head.
+- If you change a style sheet that is managed by HSB, you must bounce Gatsby to make the changes appear on your site. This works fine for me because I mostly only use `:root` css variables (ex: "--media-width-xs: 320px;") on my site's style sheets and style my components independently using Emotion.
 
-```js
-import {
-  DarkModeToggle,
-  StyleSelector,
-  StylesSummary,
-  PrefersDarkMode,
-} from "gatsby-head-style-boss/components/HSB_Components"
+## When do I use this plugin?
+
+My story: I was using a `normalize.css` followed by a `core.css` stylesheet. My core.css style sheet is mostly css variables in the `:root`, using the materialize UI approach. I use Emotion for everything else. 
+
+I wanted to add `dark mode`. Solutions like `gatsby-use-dark-mode` achieve dark mode by adding or removing `<body>` css classes . I wanted to achieve dark mode by enabling and disabling a dark css style sheet. I also had a minor desire to offer the users multiple style options, not just dark and light.
+
+I tried global theme switching with Emotion, but the style sheets were being combined into one common style sheet (by WebPack I think). The order was unpredictable, ruining the cascading behavior. I looked into modifying the WebPack config using the Gatsby api, but Gatsby's WebPack is understandably gnarly and I'm new to WebPack so I wrote this partly as a work around.
+
+I've worked with legacy web sites that had many layers of css style sheets, that had to occur in a very specific order, and they were not willing to refactor them. HSB would work well in that situation. Its also good for letting decision makers see different theme ideas before finalizing the ones that ship, at which point you just modify gatsby-config for this plugin.
+
+## Example of usage
+
+I'm using it on my own website: [EdPike365.com](https://www.edpike365.com)
+
+```json
+// gatsby-config.js
+// REMINDER: minification not implemented yet
+  {
+    resolve: `gatsby-head-style-boss`,
+    options: {
+      config: {
+        stylesFolder: "./src/styles/",
+        idPrefix: "HeadStyleBossID_",
+        minifyBrowserFunction: false,
+        styleElements: {
+          styles: [
+            {
+              "data-filename": "normalize2.css",
+              "data-displayname": "Noramlize2 Reset",
+              "data-use": "always",
+              id: "HeadStyleBossID_normalize2",
+              minifyCSS: false,
+            },
+            {
+              "data-filename": "coreTheme.css",
+              "data-displayname": "Core Theme",
+              "data-use": "always",
+              id: "HeadStyleBossID_coreTheme",
+              minifyCSS: false,
+            },
+            {
+              "data-filename": "lightTheme.css",
+              "data-displayname": "Default, Light Theme",
+              "data-use": "default",
+              id: "HeadStyleBossID_lightTheme",
+              minifyCSS: false,
+            },
+            {
+              "data-filename": "darkTheme.css",
+              "data-displayname": "Dark Theme",
+              "data-use": "alternate dark",
+              id: "HeadStyleBossID_darkTheme",
+              minifyCSS: false,
+            },
+            {
+              "data-filename": "fireTheme.css",
+              "data-displayname": "Fire Theme",
+              "data-use": "alternate",
+              id: "HeadStyleBossID_fireTheme",
+              minifyCSS: false,
+            },
+          ],
+        },
+      },
+    },
+  },
 ```
 
-## How Does it Work?
+```js
+//Importing components
+import DarkModeToggle from "gatsby-head-style-boss/components/DarkModeToggle"
+import StyleSelector from "gatsby-head-style-boss/components/StyleSelector"
+import StylesSummary from "gatsby-head-style-boss/components/StylesSummary"
+import PrefersDarkMode from "gatsby-head-style-boss/components/PrefersDarkMode"
+```
+---
+## Details For the Curious
 
-- Edit the `hsb-config.json` configuration file:
+### How Does it Work?
+- Manage style options with `gatsby-config`
+  - Each configured sheet will be injected into it's own `<style>` element during SSR
+  - (COMING SOON) Each sheet is minified based on its `minifyCSS` config.
+  - HSB annotates the `<style>` elements to make them manageable at runtime.
+- HSB injects a JS function that prevents flash on load. It also allows you to modify the `enabled` state of the head `<style>` elements.
+  - (UNTESTED) If you copy the function to your project root, you can modify it. 
+- HSB uses `wrapRootElement()` in `gatsby-ssr` and `gatsby-browser` to provide `HSB_Context`   
+- Optional React components:
+  - `DarkModeToggle`
+  - `StyleSelector`: Lists the styles that you configured in HSB_Config.
+  - `StylesSummary`: Displays real time feedback on the status of all managed styles.
+  - `PrefersDarkMode`: Show a live view of the user's "prefers dark mode" setting.
+
+
+### More Detailed Config Details
+
   - Configured style attributes become "data" attributes written into the `<style>` elements during SSR. The fields are written into the element; you can see them in the page source code.
   - Each CSS file is configured for 1 or more _uses_ (via `data-use` attribute):
-    - "always" enabled styles
+    - "always" styles are always enabled
     - Optionally Enabled Styles
       - "default" styles
       - "dark" styles
@@ -66,6 +130,10 @@ import {
   - You can always manually set `enable` state via SHBModel method calls.
   - Setting styles by `use` will `enable` the last style with that `use`, and disable all other _optional_ styles.
 - `HSB_Context` wraps the `<root>` element using the `wrapRootElement` hook in the modules `gatsby-ssr.js` and `gatsby-browser.js`.
+
+- __Caveats__:
+  - HSB does not currently minify anything.
+  - There is no automated testing or Typescript.
 
 > **WARNING: Title Attr and "Alternate" Style Sheets**  
 > There is an ancient tech called "Alternate Style Sheets". If you use the `title` attr on more than 1 style, the browser will only enable the first one it finds. It will disable any named sheets or styles past that one. Its a bit like radio buttons for styles.
@@ -81,29 +149,23 @@ import {
 
 - You have a normalize CSS file and a legacy core CSS file. They must always be enabled and come in the same order. 
 - You have a _modifying_ CSS file for dark mode (and maybe more options). It is meant to overwrite some previous values. It can be enabled or disabled.
-- In the HSB config file, list the files in order of how they should cascade: 
+- In the HSB config, list the files in order of how they should cascade: 
   - normalize.css, use "always"
-  - yourtheme.css, use "always"
+  - coretheme.css, use "always"
+  - corethemeproxy.css, use "default"
   - yourdarkmode.css, use "dark"
+- corethemeproxy.css is an empty css file that just makes the interface work better if you are using multi theme selection.
 - Add HSB_Components DarkModeToggle to a page.
 - When dark mode is activated, the dark CSS **cascades** over the core like it was meant to in the days of yore. The JS code on the html page handles everything.
-- You can optionally add React components like the ToggleDarkMode component. If you use your own toggler, it has to work with `HSB_Context`.
+- You can optionally add other React components. If you use your own toggler, it has to work with `HSB_Context`.
 
 ## Notes For Hackers
 
-- You can manually add all, or some additional, style elements to the head (e.g. the Gatsby html.js template file). They need to follow the element attribute patterns as they would have appeared in the JSON config file. Formeost they must contain the HSB id prefix from the config file.
+- You can manually add all, or some additional, style elements to the head (e.g. the Gatsby html.js template file). They need to follow the element attribute patterns as they would have appeared in the HSB config. Formeost they must contain the HSB id prefix from the config.
 - HSBModel has methods to enable or disable styles based on ID or use types. Use them to micromanage style state without selectors and also to make sure the HSB components update as expected.
 
-## General Default Rules:
 
-- All styles appear on the page in the order that they are listed in the config.
-- All styles marked `always` will be `enabled` at all times.
-- **Non** `always` styles are called options. Only one option can be enabled at time by default. If they have no special `use` add `alternate`.
-- Functions on HSBModel are available to let you get around the default behavior.
-
-> If you have a large core CSS file that you always want enabled, _and_ you want simple StyleSelector options for, say, a dark mode style, create an empty CSS file with the desired name for the default to proxy for the `use` = `always` core file.
-
-### On Initial Page Load:
+### Life Cylce and Events:
 
 - Javascript file on page runs before first render. It is blocking.
 - It reads the page for specially id'd style elements and enter them into HSBModel object.
@@ -129,38 +191,21 @@ import {
 
 ## Component Notes:
 
-- StyleSelector: All styles are listed. I use a normal `<style>` component and the `onchange` event handler so a giant red warning sign pops up during `gatsby develop`. The linter also fusses about how I should use `onblur`.
+- StyleSelector: All styles are listed. I use a normal `<style>` component and the `onchange` event handler so a giant red warning sign pops up during `gatsby develop`. The linter also fusses about how I should use `onblur`. Figuring out how to suppress those is on my backburner.
 - DarkModeToggle: Will enable the last style with `use` containing `dark`.
 
 ## Coming Soon
 
 - Manually test on more browsers
-- Node module, Gatsby plugin
 - Manage CSS style sheet `<link>`s (currently only tested on `<style>`)
-- Minify your style sheets and `HSB_Browser.js` at SSR.
-- More efficient SSR **build**: change to read files once, inject many times. Currently, during build, runs entire process on every page.
-- Auto JS unit test. Selenium test for runtime.
-- Add `use` `never` for those edge cases.
-- Move `minifyCSS` setting to per style entry.
+- Add `use` = `never` for those edge cases.
 
-## History
 
-Written originally for Gatsby 3 to fix dynamic theming issues.
-
-### Wish List
-
-- Dark Mode
-- No bright flash on initial Dark Mode load.
-- Multiple User Selectable Styles
-- CSS variables in the `:root` and offer the styles by modifying the variable values using layered css sheets, not by assigning whole new classes to the body, etc., with JS.
-- No black box plugins.
-- Compatible with `Emotion CSS`
-
-### The Problem
+### Notes
 
 - If CSS files were loaded by a React component using `import`, Gatsby 3's Webpack configuration combined the contents with multiple CSS files into one common CSS file, in unpredicatable order, wrecking cascading behavior. The Webpack config was super complicated so I did not want to modify it.
 - I attempted to add CSS configuration in the `gatsby-config` file and to leverage Gatsby's cool GraphQL. I had the file contents loaded into GraphQL as well. But when I tried to inject them into `html.js` via `gatsby-ssr.js`, I could not get access to GraphQL, so I could not access the configuration or inject the styles or JS code (using `onPreRenderHTML()`).
-- I tried to use the `use-dark-mode` Gatsby plugin but it did not support multiple style sheets being enabled and disabled. It forces you to modify the "body" class. Too limited.
+- I tried to use the `gatsby-use-dark-mode` Gatsby plugin but it did not support multiple style sheets being enabled and disabled. Too limited.
 - Luckily, `gatsby-ssr.js` **_does_** allow access to the file system because it only runs on the server. Head Style Boss takes advantage of this to turn my dreams into reality....
 
 ## Helpful Links
@@ -181,7 +226,5 @@ JS wrapped as IIFE to use private variables and functions
 https://hangindev.com/blog/avoid-flash-of-default-theme-an-implementation-of-dark-mode-in-react-app
 
 ---
-
-Free for reuse but not sale
 
 Copyright 2021, Ed Pike (EdPike365), All rights reserved.

@@ -1,27 +1,23 @@
 import * as React from "react"
 import path from "path"
-import { minifyJSString, makeRandomNumberKey } from "gatsby-head-style-boss/utils/HSB_Helpers"
+import { minifyJSString } from "gatsby-head-style-boss/utils/helpers"
+// Terser.minify(jsString).code
 
-// I tried import * as jsFunction from "./hsb_browser.js".
-// It caused the function code to be compiled (or something)
-// which caused problems with global windows calls (at least). So I'm sticking with reading the default function file 
-// from the node install folder.
-
-export const getBrowserFunction = (fs, moduleGatsbyFolderPath, browserFunctionFileName, minifyJS) => {
+export const getBrowserFunction = (fs, moduleSSRFolderPath, browserFunctionFileName, minifyJS) => {
  
   let jsString = getBrowserFunctionFromFile(fs, "", browserFunctionFileName)
   if(jsString ){
     console.log("HSB: found and using custom browser function file")
   }else{
-    jsString = getBrowserFunctionFromFile(fs, moduleGatsbyFolderPath, browserFunctionFileName)
+    jsString = getBrowserFunctionFromFile(fs, moduleSSRFolderPath, browserFunctionFileName)
   }
   
   if(minifyJS){
     jsString = minifyJSString(jsString)
   } 
 
-  // add key attr to suppress React warning
-  return <script key={makeRandomNumberKey} dangerouslySetInnerHTML={createDangerMarkup(jsString)} />
+  // add "key" attr to suppress React warning
+  return <script key="gatsby-head-style-boss" dangerouslySetInnerHTML={{ __html: jsString }} />
 }
 
 const getBrowserFunctionFromFile = (fs, folderPath, browserFunctionFileName) => {
@@ -34,7 +30,7 @@ const getBrowserFunctionFromFile = (fs, folderPath, browserFunctionFileName) => 
       jsString = fs.readFileSync(filePath, "utf-8")
       fs.close
     }else{
-      console.log("HSB: getBrowserFunctionFromFile() no file at: " + filePath)
+      console.warn("HSB: getBrowserFunctionFromFile() no file at: " + filePath)
     }
 
   } catch (err) {
@@ -59,8 +55,5 @@ export const injectBrowserFunctionIntoTopOfBody = (
 
 }
 
-function createDangerMarkup(jsString) {
-  return { __html: jsString }
-}
 
 
