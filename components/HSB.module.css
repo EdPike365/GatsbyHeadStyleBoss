@@ -1,0 +1,45 @@
+/* Can't use hyphenated names in modules.css without compile error 
+or ugly work around code inside React component render. So using underscores, sigh...
+Also, css --vars don't seem to work for transitions.
+*/
+.dark_mode_button {
+
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+  background-color: var(--color-background-paper);
+  transition: color 400ms ease-in-out, background-color 400ms ease-in-out;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px;
+  margin: 5px 5px;
+  width: 30px;
+  height: 30px;
+
+  border: none;
+  cursor: pointer;
+}
+
+.icon {
+  fill: var(--color-text-secondary);
+  stroke: var(--color-text-secondary);
+}
+
+.style_selector {
+  transition: color 400ms ease-in-out, background-color 400ms ease-in-out;
+  color: var(--color-text-secondary);
+  background-color: var(--color-background-paper);
+}
+
+.styles_summary{
+}
+
+.styles_summary h4 {
+  text-decoration: underline;
+}
+
+.prefers_dark_mode_status {
+  
+}

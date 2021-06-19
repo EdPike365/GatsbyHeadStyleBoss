@@ -1,0 +1,11 @@
+{
+  "name": "head-style-boss-v3",
+  "version": "3.0.0",
+  "description": "New version adds hot reloads for css style changes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Ed Pike",
+  "license": "MIT"
+}
