@@ -1,74 +1,48 @@
-import React, { useContext } from "react"
+import React, { useContext, useState, useEffect, useMemo } from "react"
 import * as styles from "./HSB.module.css"
 import { HSBStyleContext } from "../contexts/HSB_Context"
 import { isSSR } from "../utils/helpers"
 
+const getStyleOptions = (model) => {
+  const options = []
+  model.getOptionalStyles().forEach( styleEl => {
+    const thisOption = {
+      key: styleEl.dataset.key,
+      label: styleEl.dataset.displayname,
+      value: styleEl.id,
+    }
+    options.push(thisOption)
+  })
+  return options;
+}
+
 const StyleSelector = () => {
     const { HSBModel } = useContext(HSBStyleContext)
+    //TODO: get rid of timestamp hack so HSBModel is the actual model
     const model = HSBModel.model
-   
+    const styleOptions = isSSR() ? [] : useMemo(() => getStyleOptions(model), [model])
+    const [selectedValue, setSelectedValue] = useState(undefined)
+
+    useEffect(() => {
+      setSelectedValue(getSelectedStyleID())
+    })
+
+    function handleChange(evt) {
+      model.setHSBStyleByID(evt.target.value)
+    }
+  
     function getSelectedStyleID() {
       let styleID = ""
-      if (!isSSR()) {
-        const lastEnabledStyle = model.getLastEnabledOptionalStyle()
-        if (lastEnabledStyle) styleID = lastEnabledStyle.id
-      }
+      const lastEnabledStyle = model.getLastEnabledOptionalStyle()
+      if (lastEnabledStyle){ styleID = lastEnabledStyle.id }
       return styleID
     }
   
-    const getStyleOptions = () => {
-      const selectedStyleID = getSelectedStyleID()
-      // this node array is not iterable, has to be converted to normal array
-      // TODO try map, etc.
-      let styleArray = Array.from(model.getOptionalStyles())
-  
-      const styleOptions = []
-      for (var i = 0; i < styleArray.length; i++) {
-        const styleEl = styleArray[i]
-        const thisOption = {
-          key: styleEl.dataset.key,
-          label: styleEl.dataset.displayname,
-          value: styleEl.id,
-        }
-        if (styleEl.id === selectedStyleID) {
-          thisOption.selected = "selected"
-        }
-  
-        styleOptions.push(thisOption)
-      }
-  
-      return styleOptions
-    }
-  
-    const getSelectOptions = () => {
-      const styleOptions = getStyleOptions()
-      //Setting "selected" attribute makes React poop a big red warning --in Gatsby dev--
-      //However, if I use the recommended approach instead, -- if I'm in Gatsby PROD--, --if I reload the page--
-      //the select draws the original version, which has nothing selected.
-      //I tried everything to make it rerender. useState, useEffect. useState would be accurate
-      //but the select WOULD NOT RERENDER to reflect the state because technically the state had not changed
-      const options = styleOptions.map(option => {
-        return (
-          <option key={option.value} value={option.value} selected={option.selected}>
-            {option.label}
-          </option>
-        )
-      })
-      return options
-    }
-  
-    function handleChange(e) {
-      model.setHSBStyleByID(e.target.value)
-    }
-  
-    let selectOptions = []
-    if (!isSSR()) {
-      selectOptions = getSelectOptions()
-    }
-  
     return (
-      <select onChange={handleChange} className={`style-selector ${styles.style_selector}`} >
-        {selectOptions}
+      <select value={selectedValue} onChange={handleChange} className={`style-selector ${styles.style_selector}`} >
+        {styleOptions.map((option) => 
+          <option key={option.value} value={option.value} >{option.label}</option>
+        )}
       </select>
     )
   }
