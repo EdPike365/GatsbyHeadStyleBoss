@@ -1,7 +1,7 @@
 import fs from "fs"
 import { HSBStyleContextProvider } from "./contexts/HSB_Context"
+import { getBrowserFunctionScriptTag, injectBrowserFunctionIntoTopOfBody} from "./ssr/BrowserFunction"
 import { getStyleElements, injectStylesIntoHead } from "gatsby-head-style-boss/ssr/styleElementFactory"
-import { getBrowserFunction, injectBrowserFunctionIntoTopOfBody} from "gatsby-head-style-boss/ssr/browserFunctionFactory"
 
 export const wrapRootElement = ({ element }) => {
   return (
@@ -30,7 +30,7 @@ export const onPreRenderHTML = ({
     console.log("HSB: gatsby-ssr: config was null, loading resources...")
     config = pluginOptions.config
     styleElements = getStyleElements(config, fs)
-    browserFunction = getBrowserFunction( fs, moduleSSRFolderPath, "./hsb-browser.js", config.minifyBrowserFunction )
+    browserFunction = getBrowserFunctionScriptTag()
   }
 
   injectStylesIntoHead(styleElements, getHeadComponents, replaceHeadComponents)

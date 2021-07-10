@@ -1,6 +1,6 @@
-;(function () {
+function schmee() {
   // The odd code above is special for an IIFE. Do not modify
-  console.log("Gatsby Head Style Boss: Flash Prevention Code is running.");
+  console.log("Gatsby Head Style Boss: Flash Prevention Code V3 is running.");
   log = null; 
   // HSBModel is an IIFE and runs before the body loads. 
   // So it reflects the style elements that ACTUALLY got inserted on SSR, and their actual state.
@@ -250,4 +250,30 @@
   const thisHSBModel = new HSBModel()
   window.__HSBModel = thisHSBModel
   // The odd () code below is special for an IIFE. Do not modify
-})()
+}
+
+export const getBrowserFunctionScriptTag = () => {
+  
+  const functionString = String(schmee);
+  
+  // Wrap it in an IIFE
+  let codeToRunOnClient = `(${functionString})()`;
+  
+  // we have to put a key=something in here to keep react from complaining
+  // https://reactjs.org/docs/lists-and-keys.html#keys
+  // eslint-disable-next-line react/no-danger
+  return <script key="schmee" dangerouslySetInnerHTML={{ __html: codeToRunOnClient }} />;
+};
+
+export const injectBrowserFunctionIntoTopOfBody = (
+  pageFunction,
+  getPreBodyComponents,
+  replacePreBodyComponents
+) => {
+
+  const bodyComps = getPreBodyComponents()
+  // make sure HSB function is on top
+  const newBodyComps = [].concat(pageFunction, bodyComps)
+  replacePreBodyComponents(newBodyComps)
+
+}
