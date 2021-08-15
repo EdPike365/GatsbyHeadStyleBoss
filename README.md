@@ -35,9 +35,8 @@ Head Style Boss is also good for letting decision makers see different theme ide
 
 I'm using it on my own website: [EdPike365.com](https://www.edpike365.com)
 
+gatsby-config.js
 ```json
-// gatsby-config.js
-// REMINDER: minification not implemented yet
   {
     resolve: `gatsby-head-style-boss`,
     options: {
