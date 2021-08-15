@@ -26,9 +26,10 @@ export const HSBStyleContextProvider = (element) => {
     setHSBModel(getHSBModel())
   }
 
+  //map the functions on first load. updateModel updates the timestamp.
   useEffect(() => {
     global.window.__HSBModel.modelStateChanged = updateModel
-  })
+  }, [])
 
   return (
     <HSBStyleContext.Provider value={{ HSBModel, updateModel }}>
@@ -37,10 +38,3 @@ export const HSBStyleContextProvider = (element) => {
   )
 
 }
-
-/* this is for Gatsby to use to wrap the root element */
-/*
-export const HSBStyleContextElementWrapper = ({ element }) => (
-  <HSBStyleContextProvider>{element}</HSBStyleContextProvider>
-)
-*/

@@ -1,5 +1,5 @@
 import React from "react"
-import * as styles from "./HSB.module.css"
+import * as styles from "./DarkModeToggle.module.css"
 
 const MoonIconSolid = () => {
   return (

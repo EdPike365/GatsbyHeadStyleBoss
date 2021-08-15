@@ -1,16 +1,19 @@
-import React, { useContext } from "react"
-import * as styles from "./HSB.module.css"
+import React, { useContext, useState, useEffect } from "react"
+import * as styles from "./PrefersDarkMode.module.css"
 import { HSBStyleContext } from "gatsby-head-style-boss/contexts/HSB_Context"
-import { isSSR } from "gatsby-head-style-boss/utils/helpers"
 
 const PrefersDarkMode = () => {
   const { HSBModel } = useContext(HSBStyleContext)
   const model = HSBModel.model
 
+  const [prefersDark, setPrefersDark] = useState("")
+  useEffect( () =>{
+    setPrefersDark(model.darkQuery.matches ? "true" : "false")
+  }, [HSBModel])
+
   return (
     <span className={ `prefers-dark-mode-status ${styles.prefers_dark_mode_status}` }>
-      Prefers Dark Mode ={" "}
-      {!isSSR() && model.darkQuery.matches ? "true" : "false"}.
+      Prefers Dark Mode = {prefersDark}.
     </span>
   )
 }

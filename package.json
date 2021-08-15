@@ -1,11 +1,39 @@
 {
-  "name": "head-style-boss-v3",
-  "version": "3.0.0",
-  "description": "New version adds hot reloads for css style changes.",
-  "main": "index.js",
-  "scripts": {
-    "test": "test"
+  "name": "gatsby-head-style-boss",
+  "description": "Gatsby plugin to manage multiple CSS style sheets in the head. Inline local or remote style sheets at build time. Optional components to toggle dark mode, select from multiple styles or show stylesheet statuses. Prevents transition flash with IIFE. Optional minification per stylesheet.",
+  "comment": "Uses gatsby-ssr, gatsby-node, gatsby-browser. Does not currently leverage WebPack, TS or testing.",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "darkmode",
+    "stylesheet",
+    "css",
+    "\" flash prevention\""
+  ],
+  "author": {
+    "name": "EdPike365",
+    "email": "edpike365@gmail.com",
+    "url": "https://edpike365.com"
   },
-  "author": "Ed Pike",
-  "license": "MIT"
+  "bugs": {
+    "url": "https://github.com/EdPike365/GatsbyHeadStyleBoss/issues",
+    "email": "edpike365@gmail.com"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "homepage": "https://github.com/EdPike365/GatsbyHeadStyleBoss#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdPike365/GatsbyHeadStyleBoss.git"
+  },
+  "scripts": {
+    "test": "test",
+    "preversion": "npm test",
+    "versionOptions": "patch, minor, major, prepatch, preminor, premajor, prerelease, from-git",
+    "postversion": "git push && git push --tags && npm publish --dry-run"
+  },
+  "version": "3.0.0"
 }
+

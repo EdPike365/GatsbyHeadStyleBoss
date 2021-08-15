@@ -1,0 +1,6 @@
+.style_selector {
+  transition: color 400ms ease-in-out, background-color 400ms ease-in-out;
+  color: var(--color-text-secondary);
+  background-color: var(--color-background-paper);
+}
+
