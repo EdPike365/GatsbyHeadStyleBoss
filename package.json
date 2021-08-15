@@ -29,8 +29,6 @@
     "url": "git+https://github.com/EdPike365/GatsbyHeadStyleBoss.git"
   },
   "scripts": {
-    "test": "test",
-    "preversion": "npm test",
     "versionOptions": "patch, minor, major, prepatch, preminor, premajor, prerelease, from-git",
     "postversion": "git push && git push --tags && npm publish --dry-run"
   },
