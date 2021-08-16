@@ -1,6 +1,7 @@
 # gatsby-head-style-boss 
 
 [![npm][npm]][npm-url]
+[![npm-downloads][npm-downloads]][npm-url]
 
 - Provide multiple style options, including Dark Mode.
 - Prevent default style flash on page load.
@@ -229,6 +230,7 @@ Copyright 2021, Ed Pike (EdPike365), All rights reserved.
 
 [npm]: https://img.shields.io/npm/v/gatsby-head-style-boss.svg
 [npm-url]: https://npmjs.com/package/gatsby-head-style-boss
+[npm-downloads]: https://img.shields.io/npm/dw/gatsby-head-style-boss
 [node]: https://img.shields.io/node/v/gatsby-head-style-boss.svg
 [node-url]: https://nodejs.org
 [twitter]: https://img.shields.io/twitter/url?url=https%3A%2F%2Fshields.io
