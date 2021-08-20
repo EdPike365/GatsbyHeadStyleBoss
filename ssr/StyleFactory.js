@@ -3,19 +3,16 @@ import { getStyleComponent } from "./StyleComponentFactory"
 
 export const getStyleComponents = (config, fs) => {
 
-    const stylesFolderURL = config.staticOutputFolder.replace("/static", "") + "/"
-    console.log("HSB stylesFolderURL = " + stylesFolderURL)
-
     const styleComponents = [];
     config.styleConfigs.forEach(styleConfig => {
         if(styleConfig.componentType === "LINK" ){
-            styleComponents.push(getLinkPreloaderComponent(styleConfig, stylesFolderURL))
-            styleComponents.push(getLinkComponent(styleConfig, stylesFolderURL))
+            styleComponents.push(getLinkPreloaderComponent(styleConfig))
+            styleComponents.push(getLinkComponent(styleConfig))
         }else{
             styleComponents.push(getStyleComponent(styleConfig, fs)) 
         }
     })
-    return styleComponents;
+    return styleComponents
 }
 
 export const injectStylesIntoHead = (

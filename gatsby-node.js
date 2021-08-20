@@ -1,5 +1,4 @@
-const {positionStyleResources} = require("./ssr/StyleFactoryNode")
-const fs = require("fs")
+const {processStyleResources} = require("./node/StyleFactoryNode")
 //TODO work with webpack in production-app.js for hot reload, etc
 //https://www.gatsbyjs.com/docs/production-app/
 
@@ -17,11 +16,18 @@ const fs = require("fs")
 
 // WARNING: YOU CANNOT USE ES6 IMPORTS HERE. Or in anything that this imports.
 // https://github.com/gatsbyjs/gatsby/issues/7810
-exports.onPreBootstrap = ({ cache }, pluginOptions) => {
+exports.onPreBootstrap = async ({ cache }, pluginOptions) => {
   const config = pluginOptions.config
-  positionStyleResources(config, fs)
+  await processStyleResources(config)
 }
-
+/*
+exports.onPostBuild = async function onPostBuild(nodeOptions, pluginOptions) {
+  console.log("onPostBuild " + JSON.stringify({
+    nodeOptions,
+    pluginOptions
+  }, null, 2))
+}
+*/
 
 //global variables via webpack
 //https://github.com/gatsbyjs/gatsby/issues/26676

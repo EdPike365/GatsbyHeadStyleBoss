@@ -15,8 +15,8 @@ export const wrapRootElement = ({ element }) => {
 // Unfortunately, we dont have acess to pluginOptions until onPreRenderHTML() runs,
 // so we have to lazy init.
 let config = null;
+let browserFunctionComponent = null;
 let styleComponents = null;
-let browserFunction = null;
 
 export const onPreRenderHTML = ({
   getHeadComponents,
@@ -25,19 +25,24 @@ export const onPreRenderHTML = ({
   replacePreBodyComponents
   
 }, pluginOptions) => {
-  
+
   lazyInit(pluginOptions)
 
+  injectBrowserFunctionIntoTopOfBody( browserFunctionComponent, getPreBodyComponents, replacePreBodyComponents )  
   injectStylesIntoHead(styleComponents, getHeadComponents, replaceHeadComponents)
-  injectBrowserFunctionIntoTopOfBody( browserFunction, getPreBodyComponents, replacePreBodyComponents )  
+
 }
 
 const lazyInit = (pluginOptions) => {
-  if(!config){
-    console.log("HSB: gatsby-ssr lazyInit(): config was null, so loading needed resources...")
-    config = pluginOptions.config
-    browserFunction = getBrowserFunctionScriptTag(config.minifyBrowserFunction)
+
+  if(!browserFunctionComponent){
+
+    console.info("HSB: gatsby-ssr lazyInit(): config was null, so loading needed resources...")
+    
+    config = pluginOptions.config    
+    browserFunctionComponent = getBrowserFunctionScriptTag(config.minifyBrowserFunction)
     styleComponents = getStyleComponents(config, fs)
+    
   }
 }
 

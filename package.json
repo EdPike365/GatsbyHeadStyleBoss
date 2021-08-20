@@ -1,15 +1,28 @@
 {
-  "name": "gatsby-head-style-boss",
-  "description": "Gatsby plugin to manage multiple CSS style sheets in the head. Inline local or remote style sheets at build time. Optional components to toggle dark mode, select from multiple styles or show stylesheet statuses. Prevents transition flash with IIFE. Optional minification per stylesheet.",
-  "comment": "Uses gatsby-ssr, gatsby-node, gatsby-browser. Does not currently leverage WebPack, TS or testing.",
-  "keywords": [
-    "gatsby",
-    "gatsby-plugin",
-    "darkmode",
-    "stylesheet",
-    "css",
-    "\" flash prevention\""
+  "_from": "gatsby-head-style-boss@latest",
+  "_id": "gatsby-head-style-boss@3.0.2",
+  "_inBundle": false,
+  "_integrity": "sha512-SDvM7xjRCGjfdOpfpQUpidUEmm1I9U9b7SY/giZJzVuFLpNmrh5GQlPV3NkO2oD9ARPWA36KsUTzE4DKtMoahw==",
+  "_location": "/gatsby-head-style-boss",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "gatsby-head-style-boss@latest",
+    "name": "gatsby-head-style-boss",
+    "escapedName": "gatsby-head-style-boss",
+    "rawSpec": "latest",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
   ],
+  "_resolved": "https://registry.npmjs.org/gatsby-head-style-boss/-/gatsby-head-style-boss-3.0.2.tgz",
+  "_shasum": "1c3632aca3e4566cf1f83436ea711967a09043c7",
+  "_spec": "gatsby-head-style-boss@latest",
+  "_where": "C:\\Users\\EdPike365\\code\\edpike365-blog",
   "author": {
     "name": "EdPike365",
     "email": "edpike365@gmail.com",
@@ -20,17 +33,38 @@
     "email": "edpike365@gmail.com"
   },
   "bundleDependencies": false,
+  "comment": "Uses gatsby-ssr, gatsby-node, gatsby-browser. Does not currently leverage WebPack, TS or testing.",
   "deprecated": false,
+  "description": "Gatsby plugin to manage multiple CSS style sheets in the head. Inline local or remote style sheets at build time. Optional components to toggle dark mode, select from multiple styles or show stylesheet statuses. Prevents transition flash with IIFE. Optional minification per stylesheet.",
   "homepage": "https://github.com/EdPike365/GatsbyHeadStyleBoss#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "darkmode",
+    "stylesheet",
+    "css",
+    "head",
+    "\" flash prevention\""
+  ],
   "license": "MIT",
   "main": "index.js",
+  "name": "gatsby-head-style-boss",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/EdPike365/GatsbyHeadStyleBoss.git"
   },
   "scripts": {
-    "versionOptions": "patch, minor, major, prepatch, preminor, premajor, prerelease, from-git",
-    "postversion": "git push && git push --tags && npm publish --dry-run"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postversion": "git push && git push --tags && npm publish --dry-run",
+    "versionOptions": "patch, minor, major, prepatch, preminor, premajor, prerelease, from-git"
+  },
+  "peerDependencies": {
+    "cssnano": "^5.0.7",
+    "cssnano-preset-default": "^5.1.3",
+    "postcss": "^8.3.6",
+    "autoprefixer": "^10.3.1",
+    "axios": "^0.21.1",
+    "terser": "^5.7.1"
   },
   "version": "3.0.2"
 }
