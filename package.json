@@ -1,28 +1,4 @@
 {
-  "_from": "gatsby-head-style-boss@latest",
-  "_id": "gatsby-head-style-boss@3.0.2",
-  "_inBundle": false,
-  "_integrity": "sha512-SDvM7xjRCGjfdOpfpQUpidUEmm1I9U9b7SY/giZJzVuFLpNmrh5GQlPV3NkO2oD9ARPWA36KsUTzE4DKtMoahw==",
-  "_location": "/gatsby-head-style-boss",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "tag",
-    "registry": true,
-    "raw": "gatsby-head-style-boss@latest",
-    "name": "gatsby-head-style-boss",
-    "escapedName": "gatsby-head-style-boss",
-    "rawSpec": "latest",
-    "saveSpec": null,
-    "fetchSpec": "latest"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/gatsby-head-style-boss/-/gatsby-head-style-boss-3.0.2.tgz",
-  "_shasum": "1c3632aca3e4566cf1f83436ea711967a09043c7",
-  "_spec": "gatsby-head-style-boss@latest",
-  "_where": "C:\\Users\\EdPike365\\code\\edpike365-blog",
   "author": {
     "name": "EdPike365",
     "email": "edpike365@gmail.com",
