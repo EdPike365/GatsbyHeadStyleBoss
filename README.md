@@ -154,7 +154,7 @@ import PrefersDarkMode from "gatsby-head-style-boss/components/PrefersDarkMode"
 
 # Notes
 
-- "gatsby-head-style-boss/components/PrefersDarkMode" Will show the "prefers-dark-mode" media query result. It will change to reflect your OS settings or browser emulation changes in real time. 
+- "gatsby-head-style-boss/components/PrefersDarkMode" Will show the "prefers-dark-mode" media query result. It will change to reflect your OS settings or browser emulation changes in real time.
 
 ## Caveats
 
@@ -175,7 +175,7 @@ import PrefersDarkMode from "gatsby-head-style-boss/components/PrefersDarkMode"
 - Make sure the file processing is done in parallel. Try to reduce the number of asyn and awaits to the bare minimum.
 - Replace the current CSS file injection code to make it hot reloadable and to be managed and compressed by Babel and WebPack. **This will also get rid of the build warnings about `fs` use.**
 
-See [changelog.md](changelog.md)
+See [changelog.md](CHANGELOG.md)
 
 See [details.md](details.md) for additonal info in rough form.
 
