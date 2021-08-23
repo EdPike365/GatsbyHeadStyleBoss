@@ -1,6 +1,6 @@
 import fs from "fs"
 import { HSBStyleContextProvider } from "./contexts/HSB_Context"
-import { getBrowserFunctionScriptTag, injectBrowserFunctionIntoTopOfBody} from "./ssr/BrowserFunction"
+import { getBrowserFunctionScriptTag, injectBrowserFunctionIntoTopOfBody} from "./ssr/IIFEFactory"
 import { getStyleComponents, injectStylesIntoHead } from "./ssr/StyleFactory"
 
 export const wrapRootElement = ({ element }) => {
@@ -27,7 +27,6 @@ export const onPreRenderHTML = ({
 }, pluginOptions) => {
 
   lazyInit(pluginOptions)
-
   injectBrowserFunctionIntoTopOfBody( browserFunctionComponent, getPreBodyComponents, replacePreBodyComponents )  
   injectStylesIntoHead(styleComponents, getHeadComponents, replaceHeadComponents)
 
@@ -35,12 +34,12 @@ export const onPreRenderHTML = ({
 
 const lazyInit = (pluginOptions) => {
 
-  if(!browserFunctionComponent){
+  if(!config){
 
     console.info("HSB: gatsby-ssr lazyInit(): config was null, so loading needed resources...")
     
     config = pluginOptions.config    
-    browserFunctionComponent = getBrowserFunctionScriptTag(config.minifyBrowserFunction)
+    browserFunctionComponent = getBrowserFunctionScriptTag(config, fs)
     styleComponents = getStyleComponents(config, fs)
     
   }

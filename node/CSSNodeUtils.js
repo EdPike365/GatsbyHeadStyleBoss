@@ -1,5 +1,5 @@
 const path = require("path")
-const {getFileNameFromFilePath, insertStringBeforeExtension, getCacheDir, getPublicDir} = require("../utils/fileUtils")
+const {getFileNameFromFilePath, insertStringBeforeExtension, getCacheDir, getPublicDir} = require("gatsby-head-style-boss/utils/fileUtils")
 const {getFileNameFromURL} = require("../utils/netUtils")
 
 const getStylesCacheDir = () => {
@@ -18,6 +18,12 @@ const getLinkStylesDir = () => {
 const getLinkFilePath = (styleConfig) =>{
     const fileName = getCSSFileName(styleConfig)
     return path.join(getLinkStylesDir(), fileName )
+}
+
+const getLinkPublicURL = (styleConfig) => {
+    const fileName = getCSSFileName(styleConfig)
+    const urlString = "/styles/" + fileName
+    return urlString
 }
 
 const getCSSFileName = (styleConfig) => {
@@ -41,6 +47,7 @@ module.exports = {
     getLinkStylesDir,
     getCacheFilePath,
     getLinkFilePath,
+    getLinkPublicURL,
     getCSSFileName
 
 }

@@ -1,10 +1,12 @@
 const {processStyleResources} = require("./node/StyleFactoryNode")
+const {processIIFEFunction} = require("./node/IIFEFunctionNode")
 //TODO work with webpack in production-app.js for hot reload, etc
 //https://www.gatsbyjs.com/docs/production-app/
 
-// Until then, use same minification as Gatsby webpack
-// Minify javascript using Terser (https://terser.org/)
-// Minify CSS by using cssnano (https://cssnano.co/)
+  //if using this async()(), have to have a ; above or get a TypeError:console.log(...) is not a function
+  //https://stackoverflow.com/questions/31013221/typeerror-console-log-is-not-a-function
+
+
 
 // webpack export stats?
 
@@ -18,7 +20,8 @@ const {processStyleResources} = require("./node/StyleFactoryNode")
 // https://github.com/gatsbyjs/gatsby/issues/7810
 exports.onPreBootstrap = async ({ cache }, pluginOptions) => {
   const config = pluginOptions.config
-  await processStyleResources(config)
+  await processStyleResources(config);
+  await processIIFEFunction(config);
 }
 /*
 exports.onPostBuild = async function onPostBuild(nodeOptions, pluginOptions) {

@@ -40,7 +40,6 @@
     resolve: `gatsby-head-style-boss`,
     options: {
       config: {
-        minifyBrowserFunction: false,
         styleElements: {
           styleConfigs: [
             {
@@ -49,8 +48,7 @@
               alwaysEnabled: true,
               componentType: "STYLE",
               crossorigin: "false",
-              pathToCSSFile: "./src/styles/normalize2.css",
-              staticFileNameOverride: "normalize22.css",
+              pathToCSSFile: "./src/styles/normalize2.css"
             },
             {
               key: "core",
@@ -85,7 +83,6 @@
               alwaysEnabled: false,
               componentType: "STYLE",
               pathToCSSFile: "./src/styles/fireTheme.css",
-              remoteHREF: "",
               media: "(max-width: 900px)",
               minify: false,
             },
@@ -97,6 +94,13 @@
                 "https://hawkwood.com/wp-content/plugins/jetpack/css/jetpack.css?ver=9.8.1",
               cacheRemoteCSS: true,
               minify: true,
+            },
+            {
+              key: "burger",
+              displayName: "Burger King",
+              componentType: "LINK",
+              remoteHREF: "https://www.edpike365.com/test/burger.css",
+              cacheRemoteCSS: false
             },
           ],
         },
@@ -125,7 +129,7 @@ import PrefersDarkMode from "gatsby-head-style-boss/components/PrefersDarkMode"
 
 - `displayName`: String. **Required**. Ex: "Normalize2 Reset". Appears in the multi style selector if you are using it.
 
-- `componentType`: String. **\*Required**. "STYLE" or "LINK". Links will have a preceding `preload <link>`, which is how WebPack does it. `STYLE` will always embed the CSS from the specified style sheet.
+- `componentType`: String. **\*Required**. "STYLE" or "LINK". Links will have a preceding `<link preload>` component, which is how WebPack does it. `STYLE` will always embed the CSS from the specified style sheet whether it is a remote or local file.
 
 - `alwaysEnabled`: boolean. true or false. Default false
 
@@ -150,6 +154,8 @@ import PrefersDarkMode from "gatsby-head-style-boss/components/PrefersDarkMode"
 
 # Notes
 
+- "gatsby-head-style-boss/components/PrefersDarkMode" Will show the "prefers-dark-mode" media query result. It will change to reflect your OS settings or browser emulation changes in real time. 
+
 ## Caveats
 
 - There is no automated testing or Typescript.
@@ -162,15 +168,16 @@ import PrefersDarkMode from "gatsby-head-style-boss/components/PrefersDarkMode"
 
 ## TODO
 
-- Test the LINK components.
 - Manually test IIFE and components on more browsers
 - TS
 - Config settings constraits in gatsby-node.js, using JOI.
 - Automated testing
-- Make sure the file processing is done in parralel. Try to reduce the number of asyn and awaits to the bare minimum.
+- Make sure the file processing is done in parallel. Try to reduce the number of asyn and awaits to the bare minimum.
 - Replace the current CSS file injection code to make it hot reloadable and to be managed and compressed by Babel and WebPack. **This will also get rid of the build warnings about `fs` use.**
 
-See [details.md](details.md) for additonal info.
+See [changelog.md](changelog.md)
+
+See [details.md](details.md) for additonal info in rough form.
 
 ## License
 

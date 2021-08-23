@@ -1,6 +1,4 @@
-import URL from "url"
-import { getFileNameFromFilePath } from "../utils/fileUtils"
-import {getLinkStylesDir, getLinkFilePath, getCSSFileName} from "gatsby-head-style-boss/node/NodeUtils"
+import {getLinkPublicURL} from "gatsby-head-style-boss/node/CSSNodeUtils"
 
 export const getLinkPreloaderComponent = (styleConfig) => {
 
@@ -14,6 +12,7 @@ export const getLinkPreloaderComponent = (styleConfig) => {
             as="style"
             href={fileHREF}
             key={thisKey}
+            crossOrigin={styleConfig.crossorigin}
         />
     )
 }
@@ -24,9 +23,11 @@ export const getLinkComponent = (styleConfig) => {
     const thisKey = "HSB_" + styleConfig.key
     const fileHREF = getFileHREF(styleConfig)
     const uses = styleConfig.uses ? styleConfig.uses : ""
-    const title = styleConfig.title ? styleConfig.title : ""
-    const media = styleConfig.media ? styleConfig.media : ""
-    const crossorigin = styleConfig.crossorigin ? styleConfig.crossorigin : ""
+
+    // we don't want these attributes to render if they are empty
+    const title = styleConfig.title ? styleConfig.title : null
+    const media = styleConfig.media ? styleConfig.media : null
+    const crossorigin = styleConfig.crossorigin ? styleConfig.crossorigin : null
 
     return (
         <link
@@ -50,7 +51,7 @@ const getFileHREF = (styleConfig) => {
     if(styleConfig.remoteHREF){
         if(styleConfig.cacheRemoteCSS){
             //this means it was put in local public/styles
-            return getPublicLinkURL(styleConfig)
+            return getLinkPublicURL(styleConfig)
         }else{
             return styleConfig.remoteHREF
         }
@@ -58,16 +59,5 @@ const getFileHREF = (styleConfig) => {
 
 }
 
-const getPublicLinkURL = (styleConfig) => {
 
-    //const linkStylesDir = getLinkStylesDir()
-    //const fileName = getCSSFileName(styleConfig)
-    //const pathToCSSFile = path.link(linkStylesDir, fileName)
-
-    //this will have .min added if compression happened
-    const pathToCSSFile = getLinkFilePath(styleConfig)
-    const parsedURL = new URL(pathToCSSFile, "/");
-    console.log("Link URL " + parsedURL)
-    return parsedURL
-}
 

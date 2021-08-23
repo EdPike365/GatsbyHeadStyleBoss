@@ -1,6 +1,7 @@
+
 function HSBFunction() {
 
-  console.log("Gatsby Head Style Boss: Flash Prevention Code V2 is running.");
+  console.log("Gatsby Head Style Boss: Flash Prevention Code is running.");
   const log = false; 
   // HSBModel is loaded by an IIFE that runs before the body loads. 
   // So it reflects the style links and elements that ACTUALLY got inserted on SSR, and their actual state.
@@ -190,29 +191,21 @@ function HSBFunction() {
   
 }
 
-export const getBrowserFunctionScriptTag = (minify) => {
-  
-  const functionString = String(HSBFunction);
+// This occurs here so if we import the function, it will not auto execute
+// TODO test importing the function directly to make sure above is true
+const getIIFE = () => {
 
-  //minify??
+  const functionString = String(HSBFunction)
   
   // Wrap it in an IIFE
-  let codeToRunOnClient = `(${functionString})()`;
-  
-  // we have to put a key=something in here to keep react from complaining
-  // eslint-disable-next-line react/no-danger
-  return <script key="HSBBrowserFunction" dangerouslySetInnerHTML={{ __html: codeToRunOnClient }} />;
-};
-
-export const injectBrowserFunctionIntoTopOfBody = (
-  pageFunction,
-  getPreBodyComponents,
-  replacePreBodyComponents
-) => {
-
-  const bodyComps = getPreBodyComponents()
-  // make sure HSB function is on top
-  const newBodyComps = [].concat(pageFunction, bodyComps)
-  replacePreBodyComponents(newBodyComps)
+  return `(${functionString})()`
 
 }
+
+module.exports = {
+  getIIFE
+}
+
+
+
+

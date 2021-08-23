@@ -1,7 +1,7 @@
 const fs = require("fs")
-const {handleLocalCSSFile, handleRemoteHREF} = require("gatsby-head-style-boss/node/CSSLocalFile")
+const {handleLocalCSSFile} = require("gatsby-head-style-boss/node/CSSLocalFile")
 const {handleRemoteCSSHREF} = require("gatsby-head-style-boss/node/CSSRemoteFile")
-const {getStylesCacheDir, getStylesStaticDir} = require("./NodeUtils")
+const {getStylesCacheDir} = require("gatsby-head-style-boss/node/CSSNodeUtils")
 
 //Everything in here is used by gatsby-node.js, so it has to be ES5 compliant (as of 7/2021)
 
@@ -13,6 +13,7 @@ const processStyleResources = async (config) => {
   }
 
   //TODO make parallel (change to map and async?)
+  //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
   config.styleConfigs.forEach(styleConfig => {
     if(styleConfig.pathToCSSFile){
       handleLocalCSSFile(styleConfig)

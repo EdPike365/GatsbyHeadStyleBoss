@@ -3,7 +3,7 @@ const defaultPreset = require("cssnano-preset-default")
 const cssnano = require("cssnano")
 const autoprefixer = require("autoprefixer")
 
-//Everything in here is used by gatsby-node.js, so it has to be ES5 compliant (as of 7/2021)
+// process() returns a pseudo promise, so normal resolve does not work
 const minifyCSSAsync = (cssString) => {
         
     //const preset = defaultPreset({ discardComments: false });

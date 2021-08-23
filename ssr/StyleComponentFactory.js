@@ -1,6 +1,6 @@
 
 import { getStringFromFileUTF8SyncFS } from "../utils/fileUtils"
-import {getCacheFilePath} from "../node/NodeUtils"
+import {getCacheFilePath} from "gatsby-head-style-boss/node/CSSNodeUtils"
 
 export const getStyleComponent = (styleConfig, fs) => {
 
@@ -10,9 +10,9 @@ export const getStyleComponent = (styleConfig, fs) => {
   const type = "text/css"
   const thisKey = "HSB_" + styleConfig.key
   const uses = styleConfig.uses ? styleConfig.uses : ""
-  const title = styleConfig.title ? styleConfig.title : ""
-  const media = styleConfig.media ? styleConfig.media : ""
-  const crossorigin = styleConfig.crossorigin ? styleConfig.crossorigin : ""
+  const title = styleConfig.title ? styleConfig.title : null
+  const media = styleConfig.media ? styleConfig.media : null
+  const crossorigin = styleConfig.crossorigin ? styleConfig.crossorigin : null
 
   return (
     <style
@@ -34,7 +34,6 @@ export const getStyleComponent = (styleConfig, fs) => {
 const getCSSStringFromCache = (styleConfig, fs) => {
 
   const pathToCSSFile = getCacheFilePath(styleConfig)
-  console.log("HSB: getCSSStringFromCache(): Loading css file: " + pathToCSSFile)
   return getStringFromFileUTF8SyncFS(fs, pathToCSSFile)
 
 }

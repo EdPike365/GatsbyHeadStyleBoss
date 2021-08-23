@@ -1,7 +1,7 @@
 const fs = require("fs")
-const {downloadStringFromURL} = require("gatsby-head-style-boss/utils/netUtils")
-const {minifyCSSAsync} = require("gatsby-head-style-boss/node/CSSMinifier")
-const {getLinkStylesDir, getLinkFilePath} = require("gatsby-head-style-boss/node/NodeUtils")
+const {downloadStringFromURL} = require("../utils/netUtils")
+const {minifyCSSAsync} = require("./CSSMinifier")
+const {getLinkStylesDir, getLinkFilePath} = require("./CSSNodeUtils")
 const {writeCSSToCacheFile} = require("./CSSLocalFile")
 
 const handleRemoteCSSHREF = async (styleConfig) => {
@@ -14,30 +14,28 @@ const handleRemoteCSSHREF = async (styleConfig) => {
           fs.mkdirSync(linkStylesDir, {recursive: true}, err => { console.error(err)})
         }
 
-        console.info(`Node: ${styleConfig.displayName} remoteHREF = ${styleConfig.remoteHREF}. CACHEING locally.`)
         const cssString = await downloadStringFromURL(styleConfig.remoteHREF)
         //this will not be inlined
         //so put in static folder so will be in public folder, so link can load it
 
         if(styleConfig.minify){
-            console.info(`StyleFactoryNode: ${styleConfig.displayName} will be minified.`)
     
             // result is a quasi promise returned by postCSS.
             // so I cant use full await because it does not resolve properly.
             // postcss docs https://postcss.org/api/#lazyresult
             await minifyCSSAsync(cssString).then(result => {
                 const miniCSS = result.css
-                console.info(`HSB: minifyCSS(): "${styleConfig.displayName}": css length before: ${cssString.length} after: ${miniCSS.length}`)
+                console.info(`HSBNode: Cached locally. minifyCSS(): "${styleConfig.displayName}": css length before: ${cssString.length} after: ${miniCSS.length}`)
                 writeFile(styleConfig, miniCSS)
             })
     
         }else{
-            console.info(`StyleFactoryNode: ${styleConfig.displayName} will NOT be minified.`)
+            console.info(`HSBNode: Cached locally. ${styleConfig.displayName} will NOT be minified.`)
             writeFile(styleConfig, cssString)
         }
         
     }else{
-        console.info(`Node: ${styleConfig.displayName} remoteHREF = ${styleConfig.remoteHREF}. Not cacheing.`)
+        console.info(`HSBNode: ${styleConfig.displayName} remoteHREF = ${styleConfig.remoteHREF}. Not cacheing.`)
     }
 }
 

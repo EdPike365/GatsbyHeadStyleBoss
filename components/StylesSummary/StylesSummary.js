@@ -23,6 +23,7 @@ const StylesSummary = () => {
             <th>Display Name</th>
             <th>Enabled</th>
             <th>Always</th>
+            <th>Media</th>
             <th>Uses</th>
             <th>HREF</th>
           </tr>
@@ -34,6 +35,7 @@ const StylesSummary = () => {
               <td>{style.dataset.hsbDisplayname}</td>
               <td>{style.disabled ? "no" : "yes"}</td>
               <td>{style.dataset.hsbAlwaysEnabled}</td>
+              <td>{style.media}</td>
               <td>{style.dataset.hsbUses}</td>
               <td>{style.href}</td>
             </tr>
