@@ -65,5 +65,5 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "versionOptions": "patch, minor, major, prepatch, preminor, premajor, prerelease, from-git"
   },
-  "version": "3.1.1"
+  "version": "3.2.0"
 }
