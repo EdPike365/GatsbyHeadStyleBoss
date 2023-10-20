@@ -6,7 +6,7 @@ const {processIIFEFunction} = require("./node/IIFEFunctionNode")
   //if using this async()(), have to have a ; above or get a TypeError:console.log(...) is not a function
   //https://stackoverflow.com/questions/31013221/typeerror-console-log-is-not-a-function
 
-
+console.log("In the HSB dev repo")
 
 // webpack export stats?
 
