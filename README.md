@@ -177,7 +177,7 @@ import PrefersDarkMode from "gatsby-head-style-boss/components/PrefersDarkMode"
 
 See [changelog.md](CHANGELOG.md)
 
-See [details.md](details.md) for additonal info in rough form.
+See [DETAILS.md](DETAILS.md) for additonal info in rough form.
 
 ## License
 
