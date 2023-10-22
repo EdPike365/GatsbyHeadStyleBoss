@@ -1,12 +1,12 @@
-const fs = require("fs")
-const path = require("path")
+import fs, { copyFile as _copyFile, rename, existsSync, mkdirSync } from "fs"
+import { resolve, join } from "path"
 
-const getStringFromFileUTF8Sync = (filePath) => {
+export const getStringFromFileUTF8Sync = (filePath) => {
   return getStringFromFileUTF8SyncFS(fs, filePath)  
 }
 
 //In SSR, you only have one ref to FS and it has to be passed in
-const getStringFromFileUTF8SyncFS = (thisFS, filePath) => {
+export const getStringFromFileUTF8SyncFS = (thisFS, filePath) => {
 
   let fileContent = ""
   try {
@@ -27,9 +27,9 @@ const getStringFromFileUTF8SyncFS = (thisFS, filePath) => {
   return fileContent
 }
   
-const copyFile = (currentPath, destinationPath) => {
+export const copyFile = (currentPath, destinationPath) => {
 
-  fs.copyFile(currentPath, destinationPath, (err) => {
+  _copyFile(currentPath, destinationPath, (err) => {
     if (err) {
       console.error(`Error copying ${currentPath} to ${destinationPath} file!`);
       throw err
@@ -40,9 +40,9 @@ const copyFile = (currentPath, destinationPath) => {
 
 }
   
-const moveFile = (currentPath, destinationPath) => {
+export const moveFile = (currentPath, destinationPath) => {
 
-  fs.rename(currentPath, destinationPath, function (err) {
+  rename(currentPath, destinationPath, function (err) {
     if (err) {
       console.error(`Successfully moved ${currentPath} to ${destinationPath} file!`);
       throw err
@@ -53,45 +53,45 @@ const moveFile = (currentPath, destinationPath) => {
 
 }
   
-const showPaths = () => {
+export const showPaths = () => {
   console.log("GatsbyHeadStyleBoss Node Module paths:  ")
   console.log(":\t process.cwd is " + process.cwd())
-  console.log(":\t path.resolve(./) " + path.resolve('./'))
+  console.log(":\t path.resolve(./) " + resolve('./'))
   console.log(":\t __dirname " + __dirname)
   console.log(":\t __filename " + __filename)
 }
 
-const initAppFolder = (folderPath) => {
-  const folder = path.join(process.cwd(), folderPath )
-  if (!fs.existsSync(folder)){
-    fs.mkdirSync(folder);
+export const initAppFolder = (folderPath) => {
+  const folder = join(process.cwd(), folderPath )
+  if (!existsSync(folder)){
+    mkdirSync(folder);
   }
   return folder
 }
 
-const getFileNameFromFilePath = (filePath) => {
+export const getFileNameFromFilePath = (filePath) => {
   //fastest as of https://stackoverflow.com/questions/423376/how-to-get-the-file-name-from-a-full-path-using-javascript
   return filePath.split('\\').pop().split('/').pop();
 }
 
-const insertStringBeforeExtension = (insertion, str) => {
+export const insertStringBeforeExtension = (insertion, str) => {
   const pos = str.lastIndexOf(".")
   return [str.slice(0, pos), insertion, str.slice(pos)].join("")
 }
 
-const getCacheDir = () => {
-  return path.join(process.cwd(), ".cache")
+export const getCacheDir = () => {
+  return join(process.cwd(), ".cache")
 }
 
-const getPublicDir = () => {
-  return path.join(process.cwd(), "public")
+export const getPublicDir = () => {
+  return join(process.cwd(), "public")
 }
 
-const getStaticDir = () => {
-  return path.join(process.cwd(), "static")
+export const getStaticDir = () => {
+  return join(process.cwd(), "static")
 }
-  
-module.exports = {
+  /*
+export default {
   getStringFromFileUTF8SyncFS,
   getStringFromFileUTF8Sync,
   copyFile,
@@ -104,4 +104,4 @@ module.exports = {
   getPublicDir,
   getStaticDir
 }
-  
+  */

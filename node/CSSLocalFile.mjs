@@ -1,9 +1,9 @@
-const fs = require("fs")
-const {getStringFromFileUTF8Sync } = require("gatsby-head-style-boss/utils/fileUtils")
-const {minifyCSSAsync} = require("gatsby-head-style-boss/node/CSSMinifier")
-const {getCacheFilePath} = require("gatsby-head-style-boss/node/CSSNodeUtils")
+import { writeFile } from "fs"
+import { getStringFromFileUTF8Sync } from "../utils/fileUtils.mjs"
+import { minifyCSSAsync } from "./CSSMinifier.mjs"
+import { getCacheFilePath } from "./CSSNodeUtils.mjs"
 
-const handleLocalCSSFile = async (styleConfig) => {
+export const handleLocalCSSFile = async (styleConfig) => {
     const cssString = getStringFromFileUTF8Sync(styleConfig.pathToCSSFile)
     if(styleConfig.minify){
 
@@ -23,11 +23,11 @@ const handleLocalCSSFile = async (styleConfig) => {
 
 }
 
-const writeCSSToCacheFile = (styleConfig, cssString) => {
+export const writeCSSToCacheFile = (styleConfig, cssString) => {
     
     const cacheFilePath = getCacheFilePath(styleConfig)
 
-    fs.writeFile(cacheFilePath, cssString, err => {
+    writeFile(cacheFilePath, cssString, err => {
         if (err) {
             console.error(err)
             return
@@ -36,7 +36,3 @@ const writeCSSToCacheFile = (styleConfig, cssString) => {
 
 }
 
-module.exports = {
-    handleLocalCSSFile,
-    writeCSSToCacheFile
-}

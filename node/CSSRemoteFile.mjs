@@ -1,17 +1,17 @@
-const fs = require("fs")
-const {downloadStringFromURL} = require("../utils/netUtils")
-const {minifyCSSAsync} = require("./CSSMinifier")
-const {getLinkStylesDir, getLinkFilePath} = require("./CSSNodeUtils")
-const {writeCSSToCacheFile} = require("./CSSLocalFile")
+import { existsSync, mkdirSync, writeFile as _writeFile } from "fs"
+import { downloadStringFromURL } from "../utils/netUtils.mjs"
+import { minifyCSSAsync } from "./CSSMinifier.mjs"
+import { getLinkStylesDir, getLinkFilePath } from "./CSSNodeUtils.mjs"
+import { writeCSSToCacheFile } from "./CSSLocalFile.mjs"
 
-const handleRemoteCSSHREF = async (styleConfig) => {
+export const handleRemoteCSSHREF = async (styleConfig) => {
    
     // if remoteHREF AND you are a STYLE, we have to pull it down and cache it
     if(styleConfig.cacheRemoteCSS || styleConfig.componentType === "STYLE"){
 
         const linkStylesDir = getLinkStylesDir()
-        if(!fs.existsSync(linkStylesDir)){
-          fs.mkdirSync(linkStylesDir, {recursive: true}, err => { console.error(err)})
+        if(!existsSync(linkStylesDir)){
+          mkdirSync(linkStylesDir, {recursive: true}, err => { console.error(err)})
         }
 
         const cssString = await downloadStringFromURL(styleConfig.remoteHREF)
@@ -53,7 +53,7 @@ const writeCSSFileToPublicFolder = (styleConfig, cssString) => {
     
     const filePath = getLinkFilePath(styleConfig)
 
-    fs.writeFile(filePath, cssString, err => {
+    _writeFile(filePath, cssString, err => {
         if (err) {
             console.error(err)
             return
@@ -62,6 +62,3 @@ const writeCSSFileToPublicFolder = (styleConfig, cssString) => {
 
 }
 
-module.exports = {
-    handleRemoteCSSHREF
-}

@@ -1,8 +1,10 @@
-
+// This is the code that gets injected just below the page <body> tag, encircled by magic IIFE code.
+// It is defined here as a function so it will not immediately execute when imported.
+// but it will let us use the code editor for formatting etc., and someday, testing.
 function HSBFunction() {
 
   console.log("Gatsby Head Style Boss: Flash Prevention Code is running.");
-  const log = false; 
+  const log = true; 
   // HSBModel is loaded by an IIFE that runs before the body loads. 
   // So it reflects the style links and elements that ACTUALLY got inserted on SSR, and their actual state.
   class HSBModel {
@@ -191,20 +193,8 @@ function HSBFunction() {
   
 }
 
-// This occurs here so if we import the function, it will not auto execute
-// TODO test importing the function directly to make sure above is true
-const getIIFE = () => {
-
-  const functionString = String(HSBFunction)
-  
-  // Wrap it in an IIFE
-  return `(${functionString})()`
-
-}
-
-module.exports = {
-  getIIFE
-}
+const hsbFunctionString = String(HSBFunction)
+export { hsbFunctionString };
 
 
 

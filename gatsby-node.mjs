@@ -1,5 +1,10 @@
-const {processStyleResources} = require("./node/StyleFactoryNode")
-const {processIIFEFunction} = require("./node/IIFEFunctionNode")
+import { processStyleResources } from "./node/StyleFactoryNode.mjs"
+import { processIIFEFunction } from "./node/IIFEFunctionNode.mjs"
+
+// TODO You can author gatsby-config and gatsby-node in ESM syntax. 
+// This feature was added in gatsby@5.3.0.
+
+
 //TODO work with webpack in production-app.js for hot reload, etc
 //https://www.gatsbyjs.com/docs/production-app/
 
@@ -18,7 +23,7 @@ console.log("In the HSB dev repo")
 
 // WARNING: YOU CANNOT USE ES6 IMPORTS HERE. Or in anything that this imports.
 // https://github.com/gatsbyjs/gatsby/issues/7810
-exports.onPreBootstrap = async ({ cache }, pluginOptions) => {
+export async function onPreBootstrap({ cache }, pluginOptions) {
   const config = pluginOptions.config
   await processStyleResources(config);
   await processIIFEFunction(config);

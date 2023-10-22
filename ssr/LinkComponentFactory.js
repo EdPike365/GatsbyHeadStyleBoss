@@ -1,4 +1,5 @@
-import {getLinkPublicURL} from "gatsby-head-style-boss/node/CSSNodeUtils"
+import React from "react"
+import {getLinkPublicURL} from "../node/CSSNodeUtils.mjs"
 
 export const getLinkPreloaderComponent = (styleConfig) => {
 

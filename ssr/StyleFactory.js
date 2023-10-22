@@ -15,7 +15,7 @@ export const getStyleComponents = (config, fs) => {
     return styleComponents
 }
 
-export const injectStylesIntoHead = (
+export const injectStylesIntoBottomOfHead = (
     styleComponents,
     getHeadComponents,
     replaceHeadComponents
