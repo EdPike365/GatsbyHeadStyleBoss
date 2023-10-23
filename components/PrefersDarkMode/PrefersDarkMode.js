@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react"
 import * as styles from "./PrefersDarkMode.module.css"
-import { HSBStyleContext } from "gatsby-head-style-boss/contexts/HSB_Context"
+import { HSBStyleContext } from "../../contexts/HSB_Context"
 
 const PrefersDarkMode = () => {
   const { HSBModel } = useContext(HSBStyleContext)

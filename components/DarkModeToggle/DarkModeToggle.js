@@ -1,6 +1,6 @@
 import React, { useContext, useState, useLayoutEffect } from "react"
 import * as styles from "./DarkModeToggle.module.css"
-import { HSBStyleContext } from "gatsby-head-style-boss/contexts/HSB_Context"
+import { HSBStyleContext } from "../../contexts/HSB_Context"
 import MoonIconSolid from "./MoonIconSolid"
 import SunIconSolid from "./SunIconSolid"
 
