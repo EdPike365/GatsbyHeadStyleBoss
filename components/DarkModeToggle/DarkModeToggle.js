@@ -20,7 +20,7 @@ const DarkModeToggle = () => {
     }
 
     return (
-      <button onClick={handleClick} aria-label={"Dark Mode Toggle"} className={`dark-mode-toggle ${styles.dark_mode_toggle}` } >
+      <button id="darkModeToggle" onClick={handleClick} aria-label={"Dark Mode Toggle"} className={`${styles.dark_mode_toggle} dark-mode-toggle` } >
         {showSunIcon ? <SunIconSolid /> : <MoonIconSolid/> }
       </button>
     )

@@ -1,10 +1,6 @@
 import { processStyleResources } from "./node/StyleFactoryNode.mjs"
 import { processIIFEFunction } from "./node/IIFEFunctionNode.mjs"
 
-// TODO You can author gatsby-config and gatsby-node in ESM syntax. 
-// This feature was added in gatsby@5.3.0.
-
-
 //TODO work with webpack in production-app.js for hot reload, etc
 //https://www.gatsbyjs.com/docs/production-app/
 
@@ -21,7 +17,9 @@ console.log("In the HSB dev repo")
 // and https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L311
 //what is import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
 
-// WARNING: YOU CANNOT USE ES6 IMPORTS HERE. Or in anything that this imports.
+// NOTE You can author gatsby-config and gatsby-node in ESM syntax. 
+// This feature was added in gatsby@5.3.0.
+// Until then, you COULD NOT USE ES6 IMPORTS HERE. Or in anything that this imports.
 // https://github.com/gatsbyjs/gatsby/issues/7810
 export async function onPreBootstrap({ cache }, pluginOptions) {
   const config = pluginOptions.config
