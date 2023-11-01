@@ -41,6 +41,7 @@ const StyleSheetSelector = () => {
 
   return (
     <select
+      id="style-sheet-selector"
       value={selectedOptionValues}
       onChange={handleChange}
       className={`${styles.styleSheetSelector} style-sheet-selector`}
