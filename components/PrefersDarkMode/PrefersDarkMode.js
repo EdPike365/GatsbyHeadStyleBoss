@@ -7,13 +7,13 @@ const PrefersDarkMode = () => {
   const model = HSBModel.model
 
   const [prefersDark, setPrefersDark] = useState("")
-  useEffect( () =>{
+  useEffect(() => {
     setPrefersDark(model.darkQuery.matches ? "true" : "false")
-  }, [HSBModel])
+  }, [HSBModel, model])
 
   return (
-    <span className={ `prefers-dark-mode-status ${styles.prefers_dark_mode_status}` }>
-      Prefers Dark Mode = {prefersDark}.
+    <span className={`${styles.prefersDarkModeStatus} prefers-dark-mode-status`}>
+      {prefersDark}
     </span>
   )
 }

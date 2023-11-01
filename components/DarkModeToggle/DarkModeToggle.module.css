@@ -1,28 +1,4 @@
-/* Can't use hyphenated names in modules.css without compile error 
-or ugly work around code inside React component render. So using underscores, sigh...
-*/
-.dark_mode_toggle {
-
-  color: var(--color-text-secondary);
-  white-space: pre-wrap;
-  background-color: var(--color-background-paper);
-  transition: color 400ms ease-in-out, background-color 400ms ease-in-out;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 5px;
-  margin: 5px 5px;
-  width: 30px;
-  height: 30px;
-
-  border: none;
-  cursor: pointer;
-}
-
 .icon {
-  fill: var(--color-text-secondary);
-  stroke: var(--color-text-secondary);
+  fill: red;
+  stroke: black;
 }
-
