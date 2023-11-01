@@ -17,7 +17,7 @@ const StyleSummaryCards = () => {
   return (
     <div>
       {Array.from(styleSheets).map((styleSheet, index) => (
-        <StyleSummaryCard cardNum={index + 1} styleSheet={styleSheet} />
+        <StyleSummaryCard key={styleSheet.dataset.hsbKey} cardNum={index + 1} styleSheet={styleSheet} />
       ))}
     </div>
   )

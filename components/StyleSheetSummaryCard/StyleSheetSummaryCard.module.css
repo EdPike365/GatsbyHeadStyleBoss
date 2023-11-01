@@ -33,6 +33,10 @@
     @media screen and (min-width: 540px) {
         width: 49%;
     }
+
+    @media screen and (min-width: 800px) {
+        width: 31%;
+    }
 }
 
 .check-mark {
