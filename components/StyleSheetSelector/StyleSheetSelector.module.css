@@ -1,0 +1,5 @@
+.style-sheet-selector {
+  transition: color 400ms ease-in-out, background-color 400ms ease-in-out;
+  color: white;
+  background-color: black;
+}

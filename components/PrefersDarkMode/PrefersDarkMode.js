@@ -1,21 +1,23 @@
-import React, { useContext, useState, useEffect } from "react"
-import * as styles from "./PrefersDarkMode.module.css"
-import { HSBStyleContext } from "gatsby-head-style-boss/contexts/HSB_Context"
+import React, { useContext, useState, useEffect } from "react";
+import * as styles from "./PrefersDarkMode.module.css";
+import { HSBStyleContext } from "../../contexts/HSB_Context";
 
 const PrefersDarkMode = () => {
-  const { HSBModel } = useContext(HSBStyleContext)
-  const model = HSBModel.model
+  const { HSBModel } = useContext(HSBStyleContext);
+  const model = HSBModel.model;
 
-  const [prefersDark, setPrefersDark] = useState("")
-  useEffect( () =>{
-    setPrefersDark(model.darkQuery.matches ? "true" : "false")
-  }, [HSBModel])
+  const [prefersDark, setPrefersDark] = useState("");
+  useEffect(() => {
+    setPrefersDark(model.darkQuery.matches ? "true" : "false");
+  }, [HSBModel, model]);
 
   return (
-    <span className={ `prefers-dark-mode-status ${styles.prefers_dark_mode_status}` }>
-      Prefers Dark Mode = {prefersDark}.
+    <span
+      className={`${styles.prefersDarkModeStatus} prefers-dark-mode-status`}
+    >
+      {prefersDark}
     </span>
-  )
-}
+  );
+};
 
-export default PrefersDarkMode
+export default PrefersDarkMode;

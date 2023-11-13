@@ -1,6 +1,7 @@
-const {minify} = require("terser")
+import {minify} from "terser"
+//const {minify} = require("terser")
 
-const minifyJSAsync = async (jsString) => {
+export const minifyJSAsync = async (jsString) => {
   
   //format: { `wrap_iife`: true }
   const options = {
@@ -16,7 +17,8 @@ const minifyJSAsync = async (jsString) => {
   return result.code
 
 }
-
+/*
 module.exports = {
   minifyJSAsync
 }
+*/

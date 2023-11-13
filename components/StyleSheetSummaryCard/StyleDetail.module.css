@@ -1,0 +1,16 @@
+.style-sheet-summary-card-detail {
+    padding: 5px;
+    margin: 2px;
+    background-color: rgba(7, 7, 7, 1);
+
+    /* setting for Galaxy Fold width 280px */
+    width: 100%;
+
+    @media screen and (min-width: 540px) {
+        width: 49%;
+    }
+
+    @media screen and (min-width: 800px) {
+        width: 31%;
+    }
+}

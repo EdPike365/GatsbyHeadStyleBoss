@@ -1,6 +1,5 @@
 {
   "_from": "file:C:/Users/EdPike365/code/gatsby-head-style-boss-v3/gatsby-head-style-boss/gatsby-head-style-boss-3.1.1.tgz",
-  "_id": "gatsby-head-style-boss@3.1.1",
   "_inBundle": false,
   "_integrity": "sha512-K76qVzlAwqmL8khDIq6DWtKky40Y0blEitbh1NLxzTB2ZVXvEHfXhXN1rGfnKv+Sb/NbZtjoVQ2iTnETl+vopQ==",
   "_location": "/gatsby-head-style-boss",
@@ -26,17 +25,13 @@
     "url": "https://edpike365.com"
   },
   "bugs": {
-    "url": "https://github.com/EdPike365/GatsbyHeadStyleBoss/issues",
+    "url": "https://github.com/EdPike365/gatsby-head-style-boss/issues",
     "email": "edpike365@gmail.com"
   },
-  "bundleDependencies": false,
   "comment": "Uses gatsby-ssr, gatsby-node, gatsby-browser. Does not currently leverage WebPack, TS or testing.",
-  "dependencies": {
-    "terser": "^5.7.0"
-  },
   "deprecated": false,
   "description": "Gatsby plugin to manage multiple CSS style sheets in the head. Inline local or remote style sheets at build time. Optional components to toggle dark mode, select from multiple styles or show stylesheet statuses. Prevents transition flash with IIFE. Optional minification per stylesheet.",
-  "homepage": "https://github.com/EdPike365/GatsbyHeadStyleBoss#readme",
+  "homepage": "https://github.com/EdPike365/gatsby-head-style-boss#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -50,20 +45,32 @@
   "main": "index.js",
   "name": "gatsby-head-style-boss",
   "peerDependencies": {
-    "cssnano": "^5.0.7",
-    "cssnano-preset-default": "^5.1.3",
-    "postcss": "^8.3.6",
-    "autoprefixer": "^10.3.1",
-    "axios": "^0.21.1"
+    "autoprefixer": "^10.4.14",
+    "axios": "^0.21.4",
+    "cssnano": "^5.1.14",
+    "cssnano-preset-default": "^5.2.13",
+    "gatsby": "^5.12.4",
+    "postcss": "^8.4.24",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "terser": "^5.17.4"
+  },
+  "overrides": {
+    "react-server-dom-webpack@0.0.0-experimental-c8b778b7f-20220825": {
+      "react": "^18.2.0"
+    }
+  },
+  "devDependencies": {
+    "prettier": "^2.8.7"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EdPike365/GatsbyHeadStyleBoss.git"
+    "url": "git+https://github.com/EdPike365/gatsby-head-style-boss.git"
   },
   "scripts": {
     "postversion": "git push && git push --tags && npm publish --dry-run",
     "test": "echo \"Error: no test specified\" && exit 1",
     "versionOptions": "patch, minor, major, prepatch, preminor, premajor, prerelease, from-git"
   },
-  "version": "3.2.0"
+  "version": "5.1.0"
 }

@@ -1,0 +1,35 @@
+.style-sheet-summary-card-div {
+    color: white;
+    background-color: black;
+    transition: color 400ms ease-in-out, background-color 400ms ease-in-out;
+
+    padding: 10px;
+    margin: 10px 0px;
+
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.12), 0px 0px 1px 0px rgba(0, 0, 0, 0.05);
+}
+
+.style-sheet-summary-card-title {
+    font-style: strong;
+}
+
+.style-sheet-summary-card-details-div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.check-mark {
+    color: green;
+    font-size: 1rem;
+    font-weight: bolder;
+}
+
+.warning-sign {
+    color: orange;
+    font-size: 1rem;
+    font-weight: bolder;
+}

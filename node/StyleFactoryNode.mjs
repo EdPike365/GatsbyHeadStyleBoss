@@ -1,15 +1,15 @@
-const fs = require("fs")
-const {handleLocalCSSFile} = require("gatsby-head-style-boss/node/CSSLocalFile")
-const {handleRemoteCSSHREF} = require("gatsby-head-style-boss/node/CSSRemoteFile")
-const {getStylesCacheDir} = require("gatsby-head-style-boss/node/CSSNodeUtils")
+import { existsSync, mkdirSync } from "fs"
+import { handleLocalCSSFile } from "./CSSLocalFile.mjs"
+import { handleRemoteCSSHREF } from "./CSSRemoteFile.mjs"
+import { getStylesCacheDir } from "./CSSNodeUtils.mjs"
 
 //Everything in here is used by gatsby-node.js, so it has to be ES5 compliant (as of 7/2021)
 
-const processStyleResources = async (config) => {
+export const processStyleResources = async (config) => {
 
   const stylesCacheDir = getStylesCacheDir()
-  if(!fs.existsSync(stylesCacheDir)){
-    fs.mkdirSync(stylesCacheDir, {recursive: true}, err => { console.error(err)})
+  if(!existsSync(stylesCacheDir)){
+    mkdirSync(stylesCacheDir, {recursive: true}, err => { console.error(err)})
   }
 
   //TODO make parallel (change to map and async?)
@@ -27,6 +27,3 @@ const processStyleResources = async (config) => {
 
 }
  
-module.exports = {
-  processStyleResources
-}

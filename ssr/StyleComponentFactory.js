@@ -1,6 +1,6 @@
-
-import { getStringFromFileUTF8SyncFS } from "../utils/fileUtils"
-import {getCacheFilePath} from "gatsby-head-style-boss/node/CSSNodeUtils"
+import React from "react"
+import { getStringFromFileUTF8SyncFS } from "../utils/fileUtils.mjs"
+import {getCacheFilePath} from "../node/CSSNodeUtils.mjs"
 
 export const getStyleComponent = (styleConfig, fs) => {
 

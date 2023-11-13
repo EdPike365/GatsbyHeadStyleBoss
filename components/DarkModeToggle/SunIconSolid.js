@@ -4,7 +4,7 @@ import * as styles from "./DarkModeToggle.module.css"
 const SunIconSolid = () => {
   return (
     <svg
-      className={`sun-icon ${styles.icon}`} 
+      className={`${styles.icon} sun-icon-solid`}
       viewBox="0 0 512 512"
       role="img"
       aria-hidden="true"
