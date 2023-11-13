@@ -1,17 +1,16 @@
-import React, { useContext, useState, useLayoutEffect } from "react"
-import * as styles from "./StyleSheetsSummaryTable.module.css"
-import { HSBStyleContext } from "../../contexts/HSB_Context"
+import React, { useContext, useState, useLayoutEffect } from "react";
+import * as styles from "./StyleSheetsSummaryTable.module.css";
+import { HSBStyleContext } from "../../contexts/HSB_Context";
 
 const StyleSheetsSummaryTable = () => {
+  const { HSBModel } = useContext(HSBStyleContext);
+  const model = HSBModel.model;
 
-  const { HSBModel } = useContext(HSBStyleContext)
-  const model = HSBModel.model
-
-  const [styleSheets, setStyleSheets] = useState([])
+  const [styleSheets, setStyleSheets] = useState([]);
 
   useLayoutEffect(() => {
-    setStyleSheets(model.managedStyles)
-  }, [HSBModel, model])
+    setStyleSheets(model.managedStyles);
+  }, [HSBModel, model]);
 
   return (
     <table>
@@ -29,7 +28,9 @@ const StyleSheetsSummaryTable = () => {
       <tbody>
         {Array.from(styleSheets).map((styleSheet, index) => (
           <tr key={styleSheet.dataset.hsbKey}>
-            <td>{index + 1}: {styleSheet.dataset.hsbDisplayname}</td>
+            <td>
+              {index + 1}: {styleSheet.dataset.hsbDisplayname}
+            </td>
             <td>{styleSheet.dataset.hsbKey}</td>
             <td>{styleSheet.disabled ? "no" : "yes"}</td>
             <td>{styleSheet.dataset.hsbAlwaysEnabled}</td>
@@ -40,7 +41,7 @@ const StyleSheetsSummaryTable = () => {
         ))}
       </tbody>
     </table>
-  )
-}
+  );
+};
 
-export default StyleSheetsSummaryTable
+export default StyleSheetsSummaryTable;
