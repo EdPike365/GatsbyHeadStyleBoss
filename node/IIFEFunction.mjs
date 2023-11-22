@@ -2,15 +2,40 @@
 // It is defined here as a function so it will not immediately execute when imported.
 // but it will let us use the code editor for formatting etc., and someday, testing.
 function HSBFunction() {
-  console.log(
-    "Gatsby Head Style Boss (aka HSB): Flash Prevention Code is running."
+  const lvl = {
+    NONE: 0,
+    ERROR: 1,
+    WARN: 2,
+    INFO: 3,
+    DEBUG: 4,
+    TRACE: 5,
+  };
+
+  // number set from gatsby.config
+  const logLevel = window.__HSBiifeDebugLevel;
+
+  log = function (level, msg) {
+    if (level <= logLevel) {
+      msg = "HSB IIFE: " + msg;
+      if (level === lvl.ERROR) console.error(msg);
+      else if (level === lvl.WARN) console.warn(msg);
+      else if (level === lvl.INFO) console.info(msg);
+      else if (level === lvl.DEBUG) console.debug(msg);
+      else if (level === lvl.TRACE) console.trace(msg);
+    }
+  };
+
+  log(
+    lvl.INFO,
+    "Gatsby Head Style Boss (aka HSB) IIFE Flash Prevention Code is running. Debug level = " +
+      logLevel
   );
-  const log = true;
+
   // HSBModel is loaded by an IIFE that runs before the body loads.
   // So it reflects the style links and elements that ACTUALLY got inserted on SSR, and their actual state.
   class HSBModel {
     constructor() {
-      if (log) console.log("HSBModel constructor() running...");
+      log(lvl.DEBUG, "constructor() running...");
       this.storageKey = "HeadStyleBossStyleKey";
       // We use datasets a lot: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
 
@@ -20,26 +45,20 @@ function HSBFunction() {
       this.optionalStyles = this.managedStyles.filter(
         style => !(style.dataset.hsbAlwaysEnabled === "true")
       );
-      this.darkStyles = this.managedStyles.filter(style =>
-        style.dataset.hsbUses.includes("dark")
-      );
+      this.darkStyles = this.managedStyles.filter(style => style.dataset.hsbUses.includes("dark"));
 
       this.darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
       // If you use the arrow function, "this" will be the real this,
       // and not the media query list's "this".
-      this.darkQuery.addEventListener("change", evt =>
-        this.handleDarkQueryChange(evt)
-      );
+      this.darkQuery.addEventListener("change", evt => this.handleDarkQueryChange(evt));
 
       this.enableInitialStyle();
 
-      if (log) console.log("HSBModel constructor() done!");
+      log(lvl.DEBUG, "constructor() done!");
     }
 
     isUsingADarkStyle() {
-      return (
-        this.darkStyles.filter(style => style.disabled == false).length > 0
-      );
+      return this.darkStyles.filter(style => style.disabled == false).length > 0;
     }
 
     toggleDarkStyle() {
@@ -71,16 +90,13 @@ function HSBFunction() {
     modelStateChanged = () => {
       const modelStateChangEvent = new Event("modelStateChanged");
       dispatchEvent(modelStateChangEvent);
-      if (log)
-        console.log(
-          "HSB: modelStateChanged(), HSB UI components should update now."
-        );
+      log(lvl.DEBUG, "modelStateChanged(), HSB UI components should update now.");
     };
 
     getManagedStylesFromPage = () => {
       var styleNodes = document.querySelectorAll("[data-hsb-managed*='true']");
       var arr = Array.from(styleNodes);
-      if (log) console.log("HSB: Number of managed styles: " + arr.length);
+      log(lvl.DEBUG, "Number of managed styles: " + arr.length);
       return arr;
     };
 
@@ -90,21 +106,20 @@ function HSBFunction() {
         style = this.getStyleForDarkQueryState();
       }
       if (!style) {
-        if (log)
-          console.log(
-            "HSB: enableInitialStyle(): Could not get style for stored key or dark mode. Setting to use default."
-          );
+        log(
+          lvl.WARN,
+          "enableInitialStyle(): Could not get style for stored key or dark mode. Setting to use default."
+        );
         style = this.getLastStyleWithUse("default");
       }
       this.setAndSaveStyle(style);
     };
 
     handleDarkQueryChange = evt => {
-      if (log)
-        console.log(
-          "HSB: darkQueryListener: prefers-color-scheme just changed, wants dark = " +
-            evt.matches
-        );
+      log(
+        lvl.DEBUG,
+        " darkQueryListener: prefers-color-scheme just changed, wants dark = " + evt.matches
+      );
       let style = this.getStyleForDarkQueryState();
       this.setAndSaveStyle(style);
     };
@@ -113,19 +128,14 @@ function HSBFunction() {
     // If you do it somewhere else, remember to call HSB_Context modelStateChanged(this)
     setAndSaveStyle = style => {
       // final style=null failsafe,
-      if (log)
-        console.log(
-          "HSB: setAndSaveStyle() style: " + style.dataset.hsbDisplayname
-        );
+      log(lvl.DEBUG, "setAndSaveStyle() style: " + style.dataset.hsbDisplayname);
 
       if (style) {
         this.toggleEnabledStyles(this.optionalStyles, style);
         this.setStoredStyleKey(style.dataset.hsbKey);
         this.modelStateChanged(this); //Let the UI components know something changed
       } else {
-        console.error(
-          "HSB: ERROR: HSBModel.setAndSaveStyle(): Someone tried to setAndSaveStyle to null. "
-        );
+        log(lvl.ERROR, "setAndSaveStyle(): Someone tried to setAndSaveStyle to null. ");
       }
     };
 
@@ -153,10 +163,10 @@ function HSBFunction() {
       if (!style) style = this.getLastStyleWithUse("default");
       if (!style) style = this.optionalStyles.slice(-1)[0];
       if (!style) {
-        if (log)
-          console.warn(
-            "HSB: WARNING: HSBModel getLightOrDefaultOrAnyOptionalStyle(): could not find any light, default or optional styles. Check you your config, you might only have a dark style."
-          );
+        log(
+          lvl.WARN,
+          "getLightOrDefaultOrAnyOptionalStyle(): could not find any light, default or optional styles. Check you your config, you might only have a dark style."
+        );
       }
       return style;
     }
@@ -175,9 +185,7 @@ function HSBFunction() {
     };
 
     getStylesWithUse = function (useVal) {
-      return this.optionalStyles.filter(style =>
-        style.dataset.hsbUses.includes(useVal)
-      );
+      return this.optionalStyles.filter(style => style.dataset.hsbUses.includes(useVal));
     };
 
     getStyleForKey = (styles, key) => {
@@ -198,12 +206,9 @@ function HSBFunction() {
       var styleKey = null;
       try {
         styleKey = localStorage.getItem(this.storageKey);
-        if (log)
-          console.log(
-            "HSB: getStoredStyleKey(): found stored styleKey " + styleKey
-          );
+        log(lvl.DEBUG, "getStoredStyleKey(): found stored styleKey " + styleKey);
       } catch (err) {
-        console.error("HSB: ERROR: HSBModel getStoredStyleKey(): " + err);
+        log(lvl.ERROR, "getStoredStyleKey(): " + err);
       }
       return styleKey;
     };
@@ -212,7 +217,7 @@ function HSBFunction() {
       try {
         localStorage.setItem(this.storageKey, keyValue);
       } catch (err) {
-        console.error("HSB: ERROR: HSBModel setStoredStyleKey(): " + err);
+        log(lvl.ERROR, "setStoredStyleKey(): " + err);
       }
     };
   }
@@ -221,5 +226,6 @@ function HSBFunction() {
   window.__HSBModel = thisHSBModel;
 }
 
+// We work in js for editor support and formatting. But we need to inject a string in the IIFE or it will execute immediately.
 const hsbFunctionString = String(HSBFunction);
 export { hsbFunctionString };

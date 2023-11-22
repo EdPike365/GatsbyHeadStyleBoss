@@ -1,13 +1,13 @@
-import { processStyleResources } from "./node/StyleFactoryNode.mjs"
-import { processIIFEFunction } from "./node/IIFEFunctionNode.mjs"
+import { processStyleResources } from "./node/StyleFactoryNode.mjs";
+import { processIIFEFunction } from "./node/IIFEFunctionNode.mjs";
 
 //TODO work with webpack in production-app.js for hot reload, etc
 //https://www.gatsbyjs.com/docs/production-app/
 
-  //if using this async()(), have to have a ; above or get a TypeError:console.log(...) is not a function
-  //https://stackoverflow.com/questions/31013221/typeerror-console-log-is-not-a-function
+//if using this async()(), have to have a ; above or get a TypeError:console.log(...) is not a function
+//https://stackoverflow.com/questions/31013221/typeerror-console-log-is-not-a-function
 
-console.log("In the HSB dev repo")
+console.log("In the HSB dev repo");
 
 // webpack export stats?
 
@@ -17,14 +17,14 @@ console.log("In the HSB dev repo")
 // and https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby/cache-dir/static-entry.js#L311
 //what is import { ForceCssHMRForEdgeCases } from "./webpack/force-css-hmr-for-edge-cases"
 
-// NOTE You can author gatsby-config and gatsby-node in ESM syntax. 
+// NOTE You can author gatsby-config and gatsby-node in ESM syntax.
 // This feature was added in gatsby@5.3.0.
 // Until then, you COULD NOT USE ES6 IMPORTS HERE. Or in anything that this imports.
 // https://github.com/gatsbyjs/gatsby/issues/7810
 export async function onPreBootstrap({ cache }, pluginOptions) {
-  const config = pluginOptions.config
-  await processStyleResources(config);
-  await processIIFEFunction(config);
+  //const config = pluginOptions.config
+  await processStyleResources(pluginOptions);
+  await processIIFEFunction(pluginOptions);
 }
 /*
 exports.onPostBuild = async function onPostBuild(nodeOptions, pluginOptions) {

@@ -19,10 +19,8 @@ export const HSBStyleContextProvider = element => {
 
   const [HSBModel, setHSBModel] = useState(getHSBModel());
 
-  // This listens for HSB model change events
-  //map the functions on first load.
+  // Add listener for modelStateChanged events fired by HSB IIFE code
   useLayoutEffect(() => {
-    console.log("HSB: HSBStyleContextProvider: useLayoutEffect called");
     // we have to addEventListerner to the window, not document
     window.addEventListener("modelStateChanged", updateModel);
     return () => {
