@@ -14,6 +14,7 @@ import React from "react";
 const IIFEDebugLevelScript = ({ debugLevelNum }) => {
   return (
     <script
+      key="HSBIIFEDebugLevelScript"
       dangerouslySetInnerHTML={{
         __html: `
             window.__HSBiifeDebugLevel = ${debugLevelNum};
